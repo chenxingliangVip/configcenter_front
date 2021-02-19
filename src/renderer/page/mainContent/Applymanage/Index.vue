@@ -18,25 +18,69 @@
             </div>
             <div class="clearBoth"></div>
         </div>
-        <div class="box">
-            <el-card class="box-card" style=" background: #A9D96C;">
-                <img src="@/assets/img/plus.png">
-                <div style="color: white;font-size: inherit;font-family: 微软雅黑;font-weight: bold;letter-spacing: 2px">
-                    创建项目
-                </div>
-            </el-card>
+        <div class="box-contain">
+            <div class="box_left">
+                <div class="txt">我的项目</div>
+            </div>
+            <div class="box">
+                <el-card class="box-card" style=" background: #A9D96C;">
+                    <img src="@/assets/img/plus.png">
+                    <div style="color: white;font-size: inherit;font-family: 微软雅黑;font-weight: bold;letter-spacing: 2px">
+                        创建项目
+                    </div>
+                </el-card>
 
-            <el-card class="box-card" v-for="envir in environmentCards " :key="envir.key" v-dragging="{ item: envir, list: environmentCards, group: 'envir' }">
-                <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                    {{envir.nameCn}}
-                </div>
-                <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                    {{envir.nameEn}}
-                </div>
-                <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                    {{envir.count}}
-                </div>
-            </el-card>
+                <el-card class="box-card" v-for="envir in environmentCards " :key="envir.key" v-dragging="{ item: envir, list: environmentCards, group: 'envir' }">
+                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                        {{envir.nameCn}}
+                    </div>
+                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                        {{envir.nameEn}}
+                    </div>
+                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                        {{envir.count}}
+                    </div>
+                </el-card>
+            </div>
+            <div class="clearBoth"></div>
+        </div>
+        <div class="box-contain">
+            <div class="box_left box_left2">
+                <div class="txt">收藏的项目</div>
+            </div>
+            <div class="box">
+                <el-card class="box-card" v-for="envir in environmentCards " :key="envir.key" v-dragging="{ item: envir, list: environmentCards, group: 'envir' }">
+                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                        {{envir.nameCn}}
+                    </div>
+                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                        {{envir.nameEn}}
+                    </div>
+                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                        {{envir.count}}
+                    </div>
+                </el-card>
+            </div>
+            <div class="clearBoth"></div>
+        </div>
+        <div class="box-contain">
+            <div class="box_left box_left3">
+                <div class="txt">最近浏览的项目</div>
+            </div>
+            <div class="box">
+                <el-card class="box-card" v-for="envir in environmentCards " :key="envir.key" v-dragging="{ item: envir, list: environmentCards, group: 'envir' }">
+                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                        {{envir.nameCn}}
+                    </div>
+                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                        {{envir.nameEn}}
+                    </div>
+                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                        {{envir.count}}
+                    </div>
+                </el-card>
+            </div>
+            <div class="clearBoth"></div>
         </div>
     </div>
 </template>
@@ -140,18 +184,48 @@
 </script>
 <style scoped lang="scss">
     @import "@/assets/style/SearchTop.scss";
-    .box {
+    .box-contain {
+        width: 100%;
+        margin-bottom: 20px;
         display: flex;
-        flex-wrap: wrap;
-    }
-    .box-card {
-        width: calc(16.667% - 10px);
-        margin: 5px;
-        text-align: center;
-        height: 90px;
-        transition: transform .3s;
-        &.dragging {
-            transform: scale(1.1);
+        border: 1px solid #e8e8e8;
+        .box_left {
+            width: 140px;
+            background: rgb(169, 217, 108);
+            color: #fff;
+            font-size: 14px;
+            font-family: 微软雅黑;
+            margin-right: 10px;
+            &.box_left2 {
+                background: #409eff;
+            }
+            &.box_left3 {
+                background: #34bfc6;
+            }
+            .txt {
+                display: flex;    
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .box {
+            width: calc(100% - 150px);
+            display: flex;
+            flex-wrap: wrap;
+            background: #fff;
+            padding: 10px 0;
+        }
+        .box-card {
+            width: calc(16.667% - 10px);
+            margin: 5px;
+            text-align: center;
+            height: 90px;
+            transition: transform .3s;
+            &.dragging {
+                transform: scale(1.1);
+            }
         }
     }
     .in-out-translate-fade-enter-active, .in-out-translate-fade-leave-active {
