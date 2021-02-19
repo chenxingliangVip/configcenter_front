@@ -18,15 +18,15 @@
             </div>
             <div class="clearBoth"></div>
         </div>
-        <div style="display: flex">
+        <div class="box">
             <el-card class="box-card" style=" background: #A9D96C;">
-                <img src="@/assets/img/plus.png" style="margin-top: -10%">
+                <img src="@/assets/img/plus.png">
                 <div style="color: white;font-size: inherit;font-family: 微软雅黑;font-weight: bold;letter-spacing: 2px">
                     创建项目
                 </div>
             </el-card>
 
-            <el-card class="box-card" v-for="(envir,index) in environmentCards " :key="index" v-dragging="{ item: envir, list: environmentCards, group: 'envir' }">
+            <el-card class="box-card" v-for="envir in environmentCards " :key="envir.key" v-dragging="{ item: envir, list: environmentCards, group: 'envir' }">
                 <div style="color: black;font-size: inherit;font-family: 微软雅黑">
                     {{envir.nameCn}}
                 </div>
@@ -49,14 +49,14 @@
     data () {
       return {
         environmentCards:[
-          {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3"},
-          {nameCn:"无服务平台",nameEn:"serverless",count:"2",professCount:"3"},
-          {nameCn:"java",nameEn:"java",count:"2",professCount:"3"},
-          {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3"},
-          {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3"},
-          {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3"},
-          {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3"},
-          {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3"},
+          {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3",key: "1"},
+          {nameCn:"无服务平台",nameEn:"serverless",count:"2",professCount:"3",key: "2"},
+          {nameCn:"java",nameEn:"java",count:"2",professCount:"3",key: "3"},
+          {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3",key: "4"},
+          {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3",key: "5"},
+          {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3",key: "6"},
+          {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3",key: "7"},
+          {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
           ],
         type: '',
         addDialog: false,
@@ -140,16 +140,35 @@
 </script>
 <style scoped lang="scss">
     @import "@/assets/style/SearchTop.scss";
-
-    .box-card {
-        width: 15%;
-        text-align: center;
+    .box {
+        display: flex;
+        flex-wrap: wrap;
     }
+    .box-card {
+        width: calc(16.667% - 10px);
+        margin: 5px;
+        text-align: center;
+        height: 90px;    
+        transition: transform .3s;
+        &.dragging {
+            transform: scale(1.1);
+        }
+    }
+    .in-out-translate-fade-enter-active, .in-out-translate-fade-leave-active {
+          transition: all .5s;
+        }
+        .in-out-translate-fade-enter, .in-out-translate-fade-leave-active {
+          opacity: 0;
+        }
+        .in-out-translate-fade-enter {
+          transform: translate3d(100%, 0, 0);
+        }
+        .in-out-translate-fade-leave-active {
+          transform: translate3d(-100%, 0, 0);
+        }
+    
 
     .ConfigManage {
-        width: 1200px;
-        margin: 0 auto;
-
         .top_line {
             height: 60px;
             line-height: 60px;
