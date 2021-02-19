@@ -145,5 +145,9 @@ export default [
         name: 'environment',//路由name
         title: '环境管理',
         icon: 'el-icon-setting',
-    }
+    }, {
+        name: 'applymanage',//路由name
+        title: '应用管理',
+        icon: 'el-icon-setting',
+    },
 ]

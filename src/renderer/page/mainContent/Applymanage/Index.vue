@@ -1,7 +1,7 @@
 <template>
     <div class="ConfigManage">
         <div class="top_line">
-            <h1>环 境 管 理</h1>
+            <h1>应 用 管 理</h1>
         </div>
         <div class="config_top_btn">
             <div class="list">
