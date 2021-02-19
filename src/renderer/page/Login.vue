@@ -50,6 +50,7 @@
     },
     methods: {
       LoginSubmit () {
+        this.$serRequestService();
         if (this.LoginForm.name) {
           if (this.LoginForm.password) {
             //登录成功
