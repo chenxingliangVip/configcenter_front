@@ -19,7 +19,7 @@ export const serRequestService = function () {
 //首次发送失败，是否重发。1：重发，0不重发
   var resendFlag = 1
 //发送内容数组
-  var resources = ['张平', 'welcome']
+  var resources = ['陈兴亮', 'welcome']
 //直连服务
   resources.forEach(function (res) {
       let byte = intToByte4(0)
