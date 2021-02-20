@@ -19,7 +19,4 @@
     -moz-osx-font-smoothing: grayscale;
     height: 100%;
   }
-  body{
-    height: 200% !important;
-  }
 </style>
