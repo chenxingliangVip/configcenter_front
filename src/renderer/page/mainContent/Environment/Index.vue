@@ -18,154 +18,178 @@
             </div>
             <div class="clearBoth"></div>
         </div>
-        <div class="box">
-            <el-card class="box-card" style=" background: #A9D96C;">
-                <img src="@/assets/img/plus.png">
-                <div style="color: white;font-size: inherit;font-family: 微软雅黑;font-weight: bold;letter-spacing: 2px">
-                    创建项目
-                </div>
-            </el-card>
+        <div class="box-contain">
+            <div class="box">
+                <el-card class="box-card" style=" background: #A9D96C;">
+                    <img src="@/assets/img/plus.png">
+                    <div style="color: white;font-size: inherit;font-family: 微软雅黑;font-weight: bold;letter-spacing: 2px">
+                        创建项目
+                    </div>
+                </el-card>
 
-            <el-card class="box-card" v-for="envir in environmentCards " :key="envir.key" v-dragging="{ item: envir, list: environmentCards, group: 'envir' }">
-                <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                    {{envir.nameCn}}
-                </div>
-                <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                    {{envir.nameEn}}
-                </div>
-                <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                    {{envir.count}}
-                </div>
-            </el-card>
+                <el-card class="box-card" v-for="envir in environmentCards " :key="envir.key" v-dragging="{ item: envir, list: environmentCards, group: 'envir' }">
+                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                        {{envir.nameCn}}
+                    </div>
+                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                        {{envir.nameEn}}
+                    </div>
+                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                        {{envir.count}}
+                    </div>
+                </el-card>
+                <el-card class="box-card more" v-if="environmentCards.length > 5">
+                    <img src="@/assets/img/more.png" class="img-more">
+                    <p>加载更多</p>
+                </el-card>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-  import Add from './add'
-
-
-  export default {
+import Add from './add'
+export default {
     data () {
-      return {
+        return {
         environmentCards:[
-          {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3",key: "1"},
-          {nameCn:"无服务平台",nameEn:"serverless",count:"2",professCount:"3",key: "2"},
-          {nameCn:"java1",nameEn:"java",count:"2",professCount:"3",key: "3"},
-          {nameCn:"tomcat2",nameEn:"tomcat",count:"2",professCount:"3",key: "4"},
-          {nameCn:"tomcat3",nameEn:"tomcat",count:"2",professCount:"3",key: "5"},
-          {nameCn:"tomcat4",nameEn:"tomcat",count:"2",professCount:"3",key: "6"},
-          {nameCn:"tomcat5",nameEn:"tomcat",count:"2",professCount:"3",key: "7"},
-          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
-          ],
+            {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3",key: "1"},
+            {nameCn:"无服务平台",nameEn:"serverless",count:"2",professCount:"3",key: "2"},
+            {nameCn:"java1",nameEn:"java",count:"2",professCount:"3",key: "3"},
+            {nameCn:"tomcat2",nameEn:"tomcat",count:"2",professCount:"3",key: "4"},
+            {nameCn:"tomcat3",nameEn:"tomcat",count:"2",professCount:"3",key: "5"},
+            {nameCn:"tomcat4",nameEn:"tomcat",count:"2",professCount:"3",key: "6"},
+            {nameCn:"tomcat5",nameEn:"tomcat",count:"2",professCount:"3",key: "7"},
+            {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
+            ],
         type: '',
         addDialog: false,
         searchData1: '',
         searchData2: '',
         tableData: [
-          {
-            date: 'dname1',
-            name: 'jkxt-proxy',
-            address: '无信息',
-            state: '2016-05-02'
-          }, {
-            date: 'css-sta1',
-            name: 'jkxt-graph',
-            address: '内存配置升级',
-            state: '2016-05-02'
-          }, {
-            date: 'css-sta2',
-            name: 'jkxt1',
-            address: '服务器地址更新',
-            state: '2016-05-02'
-          },
+            {
+                date: 'dname1',
+                name: 'jkxt-proxy',
+                address: '无信息',
+                state: '2016-05-02'
+            }, {
+                date: 'css-sta1',
+                name: 'jkxt-graph',
+                address: '内存配置升级',
+                state: '2016-05-02'
+            }, {
+                date: 'css-sta2',
+                name: 'jkxt1',
+                address: '服务器地址更新',
+                state: '2016-05-02'
+            },
         ],
         tableHeader: [],
         tableLoading: true, //table刷新
-      }
+        }
     },
     methods: {
-      getTableList () { //获取表格数据
-        this.tableLoading = true
-        setTimeout(() => {
-          for (let i = 0; i < this.tableData.length; i++) {
-            this.tableData[i]['index'] = i + 1
-          }
-          this.tableHeader = [
-            {columnValue: 'index', columnName: '序号', width: '50'},
-            {columnValue: 'date', columnName: '配置项',},
-            {columnValue: 'name', columnName: '配置值'},
-            {columnValue: 'address', columnName: '备注'},
-            {columnValue: 'state', columnName: '更新时间'},
-          ]
-          this.tableData = JSON.parse(JSON.stringify(this.tableData))
-          this.tableLoading = false
-        }, 500)
-      },
-      add () { //新增
-        this.addDialog = true
-        this.type = '新增'
-      },
-      edit () { //编辑
-        this.addDialog = true
-        this.type = '编辑'
-      },
-      goDetail () { //查看
-        this.addDialog = true
-        this.type = '查看'
-      },
-      getFormData (data) {
+        getTableList () { //获取表格数据
+            this.tableLoading = true
+            setTimeout(() => {
+                for (let i = 0; i < this.tableData.length; i++) {
+                this.tableData[i]['index'] = i + 1
+                }
+                this.tableHeader = [
+                    {columnValue: 'index', columnName: '序号', width: '50'},
+                    {columnValue: 'date', columnName: '配置项',},
+                    {columnValue: 'name', columnName: '配置值'},
+                    {columnValue: 'address', columnName: '备注'},
+                    {columnValue: 'state', columnName: '更新时间'},
+                ]
+                this.tableData = JSON.parse(JSON.stringify(this.tableData))
+                this.tableLoading = false
+            }, 500)
+        },
+        add () { //新增
+            this.addDialog = true
+            this.type = '新增'
+        },
+        edit () { //编辑
+            this.addDialog = true
+            this.type = '编辑'
+        },
+        goDetail () { //查看
+            this.addDialog = true
+            this.type = '查看'
+        },
+        getFormData (data) {
 
-      },
-      cancal (index, rows) { //删除
-        rows.splice(index, 1)
-        this.getTableList()
-      },
+        },
+        cancal (index, rows) { //删除
+            rows.splice(index, 1)
+            this.getTableList()
+        },
     },
     mounted () {
-      this.getTableList() //显示table
-      this.$dragging.$on('dragged', ({ value }) => {
-        console.log(value.item)
-        console.log(value.list)
-        console.log(value)
-      })
-      this.$dragging.$on('dragend', (res) => {
-        console.error(res);
-      })
+        this.getTableList() //显示table
+        this.$dragging.$on('dragged', ({ value }) => {
+            console.log(value.item)
+            console.log(value.list)
+            console.log(value)
+        })
+        this.$dragging.$on('dragend', (res) => {
+            console.error(res);
+        })
     },
     components: {
-      Add,
+        Add,
     },
-  }
+}
 </script>
 <style scoped lang="scss">
     @import "@/assets/style/SearchTop.scss";
-    .box {
+    .box-contain {
         display: flex;
         flex-wrap: wrap;
-    }
-    .box-card {
-        width: calc(16.667% - 10px);
-        margin: 5px;
-        text-align: center;
-        height: 90px;
-        transition: transform .3s;
-        &.dragging {
-            transform: scale(1.1);
+        height: auto;
+        overflow: hidden;
+        .box {
+            display: flex;
+            flex-wrap: wrap;
+            width: calc(100% - 50px);
+            .box-card {
+                width: calc(16.667% - 10px);
+                margin: 5px;
+                text-align: center;
+                height: 90px;
+                transition: transform .3s;
+                &.dragging {
+                    transform: scale(1.1);
+                }
+                &.more {
+                    cursor: pointer;
+                    .img-more {
+                        width: 25px;
+                    }
+                }
+            }
+        }
+        .more {
+            width: 50px;
+            span {
+                cursor: pointer;
+                margin-top: 40px;
+            }
         }
     }
     .in-out-translate-fade-enter-active, .in-out-translate-fade-leave-active {
-          transition: all .5s;
-        }
-        .in-out-translate-fade-enter, .in-out-translate-fade-leave-active {
-          opacity: 0;
-        }
-        .in-out-translate-fade-enter {
-          transform: translate3d(100%, 0, 0);
-        }
-        .in-out-translate-fade-leave-active {
-          transform: translate3d(-100%, 0, 0);
-        }
+        transition: all .5s;
+    }
+    .in-out-translate-fade-enter, .in-out-translate-fade-leave-active {
+        opacity: 0;
+    }
+    .in-out-translate-fade-enter {
+        transform: translate3d(100%, 0, 0);
+    }
+    .in-out-translate-fade-leave-active {
+        transform: translate3d(-100%, 0, 0);
+    }
 
 
     .ConfigManage {
