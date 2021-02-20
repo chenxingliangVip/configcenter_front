@@ -148,7 +148,6 @@ export default {
         display: flex;
         flex-wrap: wrap;
         height: auto;
-        overflow: hidden;
         .box {
             display: flex;
             flex-wrap: wrap;
@@ -167,6 +166,12 @@ export default {
                     .img-more {
                         width: 25px;
                     }
+                }
+                &:hover {
+                    transform: scale(1.05);
+                }
+                &:active {
+                    background: #f2fbe8;
                 }
             }
         }

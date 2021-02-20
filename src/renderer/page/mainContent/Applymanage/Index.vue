@@ -18,7 +18,7 @@
             </div>
             <div class="clearBoth"></div>
         </div>
-        <div class="box-contain">
+        <div class="box-contain contain1">
             <div class="box_left">
                 <div class="txt">我的项目</div>
             </div>
@@ -48,7 +48,7 @@
             </div>
             <div class="clearBoth"></div>
         </div>
-        <div class="box-contain">
+        <div class="box-contain contain2">
             <div class="box_left box_left2">
                 <div class="txt">收藏的项目</div>
             </div>
@@ -71,7 +71,7 @@
             </div>
             <div class="clearBoth"></div>
         </div>
-        <div class="box-contain">
+        <div class="box-contain contain3">
             <div class="box_left box_left3">
                 <div class="txt">最近浏览的项目</div>
             </div>
@@ -242,30 +242,39 @@ export default {
                         width: 25px;
                     }
                 }
+                &:hover {
+                    transform: scale(1.05);
+                }
             }
         }
-        .more {
-            width: 50px;
-            span {
-                cursor: pointer;
-                margin-top: 40px;
-            }
+        &.contain1 {
+            .box-card:active {
+                background: #f2fbe8;
+            } 
+        }
+        &.contain2 {
+            .box-card:active {
+                background: #e7f3ff;
+            } 
+        }
+        &.contain3 {
+            .box-card:active {
+                background: #ecfeff;
+            } 
         }
     }
     .in-out-translate-fade-enter-active, .in-out-translate-fade-leave-active {
-          transition: all .5s;
-        }
-        .in-out-translate-fade-enter, .in-out-translate-fade-leave-active {
-          opacity: 0;
-        }
-        .in-out-translate-fade-enter {
-          transform: translate3d(100%, 0, 0);
-        }
-        .in-out-translate-fade-leave-active {
-          transform: translate3d(-100%, 0, 0);
-        }
-
-
+        transition: all .5s;
+    }
+    .in-out-translate-fade-enter, .in-out-translate-fade-leave-active {
+        opacity: 0;
+    }
+    .in-out-translate-fade-enter {
+        transform: translate3d(100%, 0, 0);
+    }
+    .in-out-translate-fade-leave-active {
+        transform: translate3d(-100%, 0, 0);
+    }
     .ConfigManage {
         .top_line {
             height: 60px;
