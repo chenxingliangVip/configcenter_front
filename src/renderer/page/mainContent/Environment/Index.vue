@@ -1,5 +1,5 @@
 <template>
-    <div class="ConfigManage" v-loading="loading">
+    <div class="ConfigManage" >
         <div class="top_line">
             <h1>环 境 管 理</h1>
         </div>
