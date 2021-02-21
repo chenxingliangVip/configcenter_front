@@ -50,7 +50,11 @@
     },
     methods: {
       LoginSubmit () {
-        this.$serRequestService();
+        let self = this;
+        let param = {name:"陈兴亮",age:12}
+        self.$serRequestService(JSON.stringify(param)).then(function(data){
+          console.log(data)
+        });
         if (this.LoginForm.name) {
           if (this.LoginForm.password) {
             //登录成功

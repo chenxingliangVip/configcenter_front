@@ -193,5 +193,10 @@ export default [
         name: 'applymanage',
         meta: {title: '应用管理'},
         component: Applymanage
+    }, {
+        path: 'settingmanage',
+        name: 'settingmanage',
+        meta: {title: '配置管理'},
+        component: Applymanage
     }
 ]

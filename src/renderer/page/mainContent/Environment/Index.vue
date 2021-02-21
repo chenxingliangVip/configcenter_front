@@ -1,197 +1,288 @@
 <template>
-    <div class="ConfigManage">
+    <div class="ConfigManage" v-loading="loading">
         <div class="top_line">
             <h1>环 境 管 理</h1>
         </div>
         <div class="config_top_btn">
-            <div class="list">
-                <p class="zll-botton" @click="add()">新增配置</p>
+            <div class="list" @click="cloneEnvir">
+                <p class="zll-botton">克隆环境</p>
             </div>
-            <div class="list">
-                <p class="zll-botton">编辑配置</p>
+            <div class="list" @click="editEnvir">
+                <p class="zll-botton">编辑环境</p>
             </div>
-            <div class="list">
-                <p class="zll-botton">删除配置</p>
+            <div class="list" @click="delEnvir">
+                <p class="zll-botton">删除环境</p>
             </div>
-            <div class="list">
-                <p class="zll-botton">返回</p>
+            <div class="list" @click="seeEnvir">
+                <p class="zll-botton">查看环境</p>
             </div>
             <div class="clearBoth"></div>
         </div>
         <div class="box-contain">
             <div class="box">
-                <el-card class="box-card" style=" background: #A9D96C;">
+                <el-card class="box-card" style=" background: #A9D96C;cursor: pointer" @click.native="add()">
                     <img src="@/assets/img/plus.png">
                     <div style="color: white;font-size: inherit;font-family: 微软雅黑;font-weight: bold;letter-spacing: 2px">
                         创建项目
                     </div>
                 </el-card>
 
-                <el-card class="box-card" v-for="envir in environmentCards " :key="envir.key" v-dragging="{ item: envir, list: environmentCards, group: 'envir' }">
+                <el-card @click.native="clickCard(envir)" class="box-card" v-for="(envir ,index) in displayCard "
+                         :key="index"
+                         v-dragging="{ item: envir, list: displayCard, group: 'envir' }"
+                         :style="{background:envir.color}">
                     <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                        {{envir.nameCn}}
+                        {{envir.env_ename}}
                     </div>
                     <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                        {{envir.nameEn}}
+                        {{envir.env_cname}}
                     </div>
                     <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                        {{envir.count}}
+                        {{envir.comm_app_count}}
                     </div>
                 </el-card>
-                <el-card class="box-card more" v-if="environmentCards.length > 5">
-                    <img src="@/assets/img/more.png" class="img-more">
-                    <p>加载更多</p>
+                <el-card class="box-card more" v-show="environmentCards.length > displayLen" @click.native="moreCard">
+                    <img src="@/assets/img/more.png" class="img-more" v-show="!extend">
+                    <img src="@/assets/img/up.png" class="img-more" v-show="extend">
+                    <p style="font-family: 微软雅黑">加载更多</p>
                 </el-card>
             </div>
+        </div>
+        <div class="zll-dialog">
+            <popout :title="type" :visible.sync="addDialog" v-show="addDialog" class="Config_add">
+                <Add ref="add" slot="content" :titleTxt="type" @closeEnvir="closeEnvir" :editData="editData"></Add>
+                <template slot="bottom">
+                    <p class="zll-botton" v-if="type !== '查看'" @click="()=>{this.$refs.add.setFormData('addForm')}">提
+                        交</p>
+                    <p class="zll-botton" v-if="type == '查看'" @click="addDialog = false">确 定</p>
+                </template>
+            </popout>
         </div>
     </div>
 </template>
 
 <script>
-import Add from './add'
-export default {
+  import Add from './add'
+
+  export default {
     data () {
-        return {
-        environmentCards:[
-            {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3",key: "1"},
-            {nameCn:"无服务平台",nameEn:"serverless",count:"2",professCount:"3",key: "2"},
-            {nameCn:"java1",nameEn:"java",count:"2",professCount:"3",key: "3"},
-            {nameCn:"tomcat2",nameEn:"tomcat",count:"2",professCount:"3",key: "4"},
-            {nameCn:"tomcat3",nameEn:"tomcat",count:"2",professCount:"3",key: "5"},
-            {nameCn:"tomcat4",nameEn:"tomcat",count:"2",professCount:"3",key: "6"},
-            {nameCn:"tomcat5",nameEn:"tomcat",count:"2",professCount:"3",key: "7"},
-            {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
-            ],
+      return {
+        displayLen: 16,
+        extend: false,
+        queryForm: {},
+        environmentCards: [],
+        displayCard: [],
         type: '',
         addDialog: false,
-        searchData1: '',
-        searchData2: '',
-        tableData: [
-            {
-                date: 'dname1',
-                name: 'jkxt-proxy',
-                address: '无信息',
-                state: '2016-05-02'
-            }, {
-                date: 'css-sta1',
-                name: 'jkxt-graph',
-                address: '内存配置升级',
-                state: '2016-05-02'
-            }, {
-                date: 'css-sta2',
-                name: 'jkxt1',
-                address: '服务器地址更新',
-                state: '2016-05-02'
-            },
-        ],
-        tableHeader: [],
-        tableLoading: true, //table刷新
-        }
+        loading: true, //table刷新
+        currentCard: null,
+        editData: {}
+      }
     },
     methods: {
-        getTableList () { //获取表格数据
-            this.tableLoading = true
-            setTimeout(() => {
-                for (let i = 0; i < this.tableData.length; i++) {
-                this.tableData[i]['index'] = i + 1
-                }
-                this.tableHeader = [
-                    {columnValue: 'index', columnName: '序号', width: '50'},
-                    {columnValue: 'date', columnName: '配置项',},
-                    {columnValue: 'name', columnName: '配置值'},
-                    {columnValue: 'address', columnName: '备注'},
-                    {columnValue: 'state', columnName: '更新时间'},
-                ]
-                this.tableData = JSON.parse(JSON.stringify(this.tableData))
-                this.tableLoading = false
-            }, 500)
+      clickCard (envir) {
+        for (let data of this.environmentCards) {
+          if (data != envir) {
+            this.$set(data, 'color', '')
+          }
+        }
+        let color = envir.color
+        if (!color) {
+          this.$set(envir, 'color', '#f2fbe8')
+          this.currentCard = envir
+        } else {
+          envir.color = ''
+          this.currentCard = null
+        }
+      },
+      moreCard () {
+        this.extend = !this.extend
+        if (this.extend) {
+          this.displayCard = this.environmentCards
+        } else {
+          this.displayCard = this.environmentCards.slice(0, this.displayLen)
+        }
+      },
+      getEnvirCards () { //获取表格数据
+        let self = this
+        self.loading = true
+        self.$serRequestService(JSON.stringify(self.queryForm)).then(function (data) {
+          if (data == null) {
+            self.$message.error('查询出错!')
+          } else {
+            self.environmentCards = [
+              {env_cname: 'tomcat1', env_ename: 'tomcat1', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat2', env_ename: 'tomcat2', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat3', env_ename: 'tomcat3', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat4', env_ename: 'tomcat4', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat5', env_ename: 'tomcat5', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat6', env_ename: 'tomcat6', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat7', env_ename: 'tomcat7', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat8', env_ename: 'tomcat8', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat9', env_ename: 'tomcat9', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat10', env_ename: 'tomcat10', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat11', env_ename: 'tomcat11', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat12', env_ename: 'tomcat12', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat13', env_ename: 'tomcat13', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat14', env_ename: 'tomcat14', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat15', env_ename: 'tomcat15', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat16', env_ename: 'tomcat16', comm_app_count: '2', pro_app_count: '3'},
+              {env_cname: 'tomcat17', env_ename: 'tomcat17', comm_app_count: '2', pro_app_count: '3'},
+            ]
+            if (self.environmentCards.length > 16) {
+              self.displayCard = self.environmentCards.slice(0, self.displayLen)
+            } else {
+              self.displayCard = self.environmentCards
+            }
+            self.loading = false
+          }
+        })
+      },
+      add () { //新增
+        this.addDialog = true
+        this.editData = {
+          env_ename: '',
+          env_cname: '',
+          comm_app_count: '',
+          pro_app_count: '',
         },
-        add () { //新增
-            this.addDialog = true
-            this.type = '新增'
-        },
-        edit () { //编辑
-            this.addDialog = true
-            this.type = '编辑'
-        },
-        goDetail () { //查看
-            this.addDialog = true
-            this.type = '查看'
-        },
-        getFormData (data) {
+          this.type = 'add'
+      },
+      editEnvir () { //编辑
+        if (this.currentCard == null) {
+          this.$message.warning('请选中需要编辑的配置项!')
+          return
+        }
+        this.editData = Object.assign({}, this.currentCard)
+        this.addDialog = true
+        this.type = 'edit'
+      },
 
-        },
-        cancal (index, rows) { //删除
-            rows.splice(index, 1)
-            this.getTableList()
-        },
+      cloneEnvir () { //编辑
+        if (this.currentCard == null) {
+          this.$message.warning('请选中需要克隆的配置项!')
+          return
+        }
+        this.editData = Object.assign({}, this.currentCard)
+        this.addDialog = true
+        this.type = 'clone'
+      },
+      seeEnvir () { //查看
+        if (this.currentCard == null) {
+          this.$message.warning('请选中需要查看的配置项!')
+          return
+        }
+        this.editData = Object.assign({}, this.currentCard)
+        this.addDialog = true
+        this.type = 'see'
+      },
+      delEnvir () { //删除
+        let self = this
+        if (self.currentCard == null) {
+          self.$message.warning('请选中需要删除的配置项!')
+          return
+        }
+        self.$confirm('确定删除该记录？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          self.$serRequestService(JSON.stringify({env_id:this.currentCard.env_id})).then(function (data) {
+            if (data == null) {
+              self.$message.error('删除环境配置出错!')
+            } else {
+              self.$message.success('删除成功!')
+              self.getEnvirCards()
+            }
+          })
+        })
+      },
+
+      closeEnvir (data) {
+        this.getEnvirCards()
+        this.addDialog = false
+      }
     },
     mounted () {
-        this.getTableList() //显示table
-        this.$dragging.$on('dragged', ({ value }) => {
-            console.log(value.item)
-            console.log(value.list)
-            console.log(value)
-        })
-        this.$dragging.$on('dragend', (res) => {
-            console.error(res);
-        })
+      this.getEnvirCards() //显示table
+      this.$dragging.$on('dragged', ({value}) => {
+        console.log(value.item)
+        console.log(value.list)
+        console.log(value)
+      })
+      this.$dragging.$on('dragend', (res) => {
+        console.error(res)
+      })
     },
     components: {
-        Add,
+      Add,
     },
-}
+  }
 </script>
 <style scoped lang="scss">
     @import "@/assets/style/SearchTop.scss";
+
     .box-contain {
         display: flex;
         flex-wrap: wrap;
         height: auto;
+
         .box {
             display: flex;
             flex-wrap: wrap;
             width: calc(100% - 50px);
+
             .box-card {
                 width: calc(16.667% - 10px);
                 margin: 5px;
                 text-align: center;
                 height: 90px;
                 transition: transform .3s;
+
                 &.dragging {
                     transform: scale(1.1);
                 }
+
                 &.more {
                     cursor: pointer;
+
                     .img-more {
                         width: 25px;
                     }
                 }
+
                 &:hover {
                     transform: scale(1.05);
                 }
-                &:active {
-                    background: #f2fbe8;
-                }
+
+                /*&:active {*/
+                /*background: #f2fbe8;*/
+                /*}*/
             }
         }
+
         .more {
             width: 50px;
+
             span {
                 cursor: pointer;
                 margin-top: 40px;
             }
         }
     }
+
     .in-out-translate-fade-enter-active, .in-out-translate-fade-leave-active {
         transition: all .5s;
     }
+
     .in-out-translate-fade-enter, .in-out-translate-fade-leave-active {
         opacity: 0;
     }
+
     .in-out-translate-fade-enter {
         transform: translate3d(100%, 0, 0);
     }
+
     .in-out-translate-fade-leave-active {
         transform: translate3d(-100%, 0, 0);
     }

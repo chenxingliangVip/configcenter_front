@@ -214,7 +214,7 @@ export default {
                 background: #34bfc6;
             }
             .txt {
-                display: flex;    
+                display: flex;
                 justify-content: center;
                 align-items: center;
                 width: 100%;
@@ -248,19 +248,19 @@ export default {
             }
         }
         &.contain1 {
-            .box-card:active {
-                background: #f2fbe8;
-            } 
+            /*.box-card:active {*/
+                /*background: #f2fbe8;*/
+            /*} */
         }
         &.contain2 {
-            .box-card:active {
-                background: #e7f3ff;
-            } 
+            /*.box-card:active {*/
+                /*background: #e7f3ff;*/
+            /*} */
         }
         &.contain3 {
-            .box-card:active {
-                background: #ecfeff;
-            } 
+            /*.box-card:active {*/
+                /*background: #ecfeff;*/
+            /*}*/
         }
     }
     .in-out-translate-fade-enter-active, .in-out-translate-fade-leave-active {

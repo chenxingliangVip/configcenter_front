@@ -9,34 +9,31 @@ function intToByte4 (i) {
 
 var servicebus = require('./servicebus.js')
 var iconv  = require('iconv-lite');
-
-export const serRequestService = function () {
-  //测试用例
-  var host = '192.6.77.15'
-  var port = 18430
+//测试用例
+var host = '192.6.77.15'
+var port = 18430
 //超时时间，单位秒
-  var timeout = 60
+var timeout = 60
 //首次发送失败，是否重发。1：重发，0不重发
-  var resendFlag = 1
-//发送内容数组
-  var resources = ['陈兴亮', 'welcome']
-//直连服务
-  resources.forEach(function (res) {
-      let byte = intToByte4(0)
-      let str_byte = iconv.encode(res, 'GB2312')
-      let code_buf = Buffer.from(byte)
-      let buf_total = Buffer.concat([code_buf, str_byte], code_buf.length+str_byte.length);
-      //请求数据为Buffer类型，且不能为空(undefined，null，或者request.length==0)，若为空则不发送。
-      servicebus.serviceRequest(host, port, buf_total, timeout, resendFlag, function (err, response) {
-        if (err < 0) {
-          console.log('send failed!')
-        } else {
-          let resp_data = iconv.decode(response, 'gb2312').toString();
-          console.log('response data:' + resp_data)
-        }
-      })
-    }
-  )
+var resendFlag = 1
+
+export const serRequestService = function (params) {
+  return new Promise(function (resolve, reject) {
+    let byte = intToByte4(0)
+    let str_byte = iconv.encode(params, 'GB2312')
+    let code_buf = Buffer.from(byte)
+    let buf_total = Buffer.concat([code_buf, str_byte], code_buf.length+str_byte.length);
+    //请求数据为Buffer类型，且不能为空(undefined，null，或者request.length==0)，若为空则不发送。
+    servicebus.serviceRequest(host, port, buf_total, timeout, resendFlag, function (err, response) {
+      let resp_data = "";
+      if (err < 0) {
+        return null;
+      } else {
+        resp_data = iconv.decode(response, 'gb2312').toString();
+      }
+      resolve(resp_data);
+    })
+  })
 }
 
 // //通过代理访问服务

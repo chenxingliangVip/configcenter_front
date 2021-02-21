@@ -128,7 +128,7 @@ export default {
         }
         position: absolute;
         width: 55%;
-        height: 500px;
+        /*height: 550px;*/
         background: #ffffff;
         z-index: 10;
         left: 25%;
