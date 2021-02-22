@@ -18,6 +18,21 @@
             </div>
             <div class="clearBoth"></div>
         </div>
+        <div class="Search_Top_Input">
+			<div class="input_flex">
+				<el-input clearable v-model="searchInput1" placeholder="环境"></el-input>
+			</div>
+			<div class="input_flex">
+                <el-select clearable v-model="searchInput2" placeholder="环境">
+                    <el-option label="1" value="1"></el-option>
+                    <el-option label="2" value="2"></el-option>
+                </el-select>
+			</div>
+			<div class="">
+				<span class="zll-search">搜索</span>
+				<span class="zll-search-reset">重置</span>
+			</div>
+        </div>
         <div class="box-contain">
             <div class="box">
                 <el-card class="box-card" style=" background: #A9D96C;cursor: pointer" @click.native="add()">
@@ -67,6 +82,8 @@
   export default {
     data () {
       return {
+        searchInput1: '',
+        searchInput2: '',
         displayLen: 16,
         extend: false,
         queryForm: {},
@@ -313,7 +330,7 @@
             .zll-botton {
                 width: 120px;
                 border-radius: 8px;
-                // margin: 0;
+                margin-left: 90px;
             }
         }
     }

@@ -18,6 +18,21 @@
             </div>
             <div class="clearBoth"></div>
         </div>
+        <div class="Search_Top_Input">
+			<div class="input_flex">
+				<el-input clearable v-model="searchInput1" placeholder="环境"></el-input>
+			</div>
+			<div class="input_flex">
+                <el-select clearable v-model="searchInput2" placeholder="环境">
+                    <el-option label="1" value="1"></el-option>
+                    <el-option label="2" value="2"></el-option>
+                </el-select>
+			</div>
+			<div class="">
+				<span class="zll-search">搜索</span>
+				<span class="zll-search-reset">重置</span>
+			</div>
+        </div>
         <div class="box-contain contain1">
             <div class="box_left">
                 <div class="txt">我的项目</div>
@@ -31,6 +46,9 @@
                 </el-card>
 
                 <el-card class="box-card" v-for="envir in environmentCards " :key="envir.key" v-dragging="{ item: envir, list: environmentCards, group: 'envir' }">
+                    <div class="new">
+                        <img src="@/assets/img/new.png" >
+                    </div>
                     <div style="color: black;font-size: inherit;font-family: 微软雅黑">
                         {{envir.nameCn}}
                     </div>
@@ -54,6 +72,9 @@
             </div>
             <div class="box">
                 <el-card class="box-card" v-for="envir in environmentCards " :key="envir.key" v-dragging="{ item: envir, list: environmentCards, group: 'envir' }">
+                    <div class="new">
+                        <img src="@/assets/img/new.png" >
+                    </div>
                     <div style="color: black;font-size: inherit;font-family: 微软雅黑">
                         {{envir.nameCn}}
                     </div>
@@ -77,6 +98,9 @@
             </div>
             <div class="box">
                 <el-card class="box-card" v-for="envir in environmentCards " :key="envir.key" v-dragging="{ item: envir, list: environmentCards, group: 'envir' }">
+                    <div class="new">
+                        <img src="@/assets/img/new.png" >
+                    </div>
                     <div style="color: black;font-size: inherit;font-family: 微软雅黑">
                         {{envir.nameCn}}
                     </div>
@@ -102,6 +126,8 @@ import Add from './add'
 export default {
     data () {
         return {
+            searchInput1: '',
+            searchInput2: '',
             environmentCards:[
                 {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3",key: "1"},
                 {nameCn:"无服务平台",nameEn:"serverless",count:"2",professCount:"3",key: "2"},
@@ -233,6 +259,7 @@ export default {
                 text-align: center;
                 height: 90px;
                 transition: transform .3s;
+                position: relative;
                 &.dragging {
                     transform: scale(1.1);
                 }
@@ -244,6 +271,11 @@ export default {
                 }
                 &:hover {
                     transform: scale(1.05);
+                }
+                .new {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
                 }
             }
         }
@@ -300,7 +332,7 @@ export default {
             .zll-botton {
                 width: 120px;
                 border-radius: 8px;
-                // margin: 0;
+                margin-left: 90px;
             }
         }
     }
