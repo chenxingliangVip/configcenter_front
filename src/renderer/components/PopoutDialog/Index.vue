@@ -185,7 +185,7 @@ export default {
         }
         /*底部按钮*/
         .bottom {
-            height: 50px;
+            height: 20px;
             padding: 0 5px;
             display: flex;
             align-items: center;

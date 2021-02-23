@@ -1,6 +1,6 @@
 <template>
     <div class="addProject Config">
-        <h1>环境管理</h1>
+        <h1>{{title}}环境管理</h1>
         <div class="addForm zll-form">
             <el-form :model="addForm" :rules="rules" ref="addForm" class="demo-ruleForm">
                 <el-form-item class="formList" prop="env_ename" label="中文名：">
@@ -11,15 +11,19 @@
                     <el-input clearable class="input_right" placeholder="请输入英文名" v-model="addForm.env_cname"
                               :disabled="disabled"></el-input>
                 </el-form-item>
-                <el-form-item class="formList" prop="comm_app_count" label="组件应用数：">
-                    <el-input clearable class="input_right" placeholder="请输入组件应用数" v-model="addForm.comm_app_count"
-                              :disabled="disabled"></el-input>
+                <el-form-item class="formList"  label="创建人：">
+                    <el-input clearable class="input_right"  v-model="addForm.create_user_name"
+                              disabled></el-input>
                 </el-form-item>
-                <el-form-item class="formList" prop="pro_app_count" label="专业应用数：">
-                    <el-input clearable class="input_right" placeholder="请输入专业应用数" v-model="addForm.pro_app_count"
-                              :disabled="disabled"></el-input>
-                </el-form-item>
+                <!--<el-form-item class="formList" prop="pro_app_count" label="专业应用数：">-->
+                    <!--<el-input clearable class="input_right" placeholder="请输入专业应用数" v-model="addForm.pro_app_count"-->
+                              <!--:disabled="disabled"></el-input>-->
+                <!--</el-form-item>-->
             </el-form>
+        </div>
+        <div class="bottom" style="text-align: center">
+            <p class="zll-botton"  style="display: inline;margin-right: 20%">提 交</p>
+            <p class="zll-botton"  style="display: inline;background: #a1a2a7" @click="close">取 消</p>
         </div>
     </div>
 </template>
@@ -29,11 +33,14 @@
     data () {
       return {
         disabled: false,
+        title:"",
         addForm: {
           env_ename: '',
           env_cname: '',
-          comm_app_count: '',
-          pro_app_count: '',
+          create_user_id: '',
+          create_user_name: '',
+          modify_user_id:'',
+          modify_user_name:''
         },
         rules: {
           env_ename: [
@@ -42,16 +49,19 @@
           env_cname: [
             {required: true, message: '请输入英文名', trigger: 'blur',},
           ],
-          comm_app_count: [
-            {required: true, message: '请输入组件应用数', trigger: 'blur',},
-          ],
-          pro_app_count: [
-            {required: true, message: '请输入专业应用数', trigger: 'blur',},
-          ],
+          // comm_app_count: [
+          //   {required: true, message: '请输入组件应用数', trigger: 'blur',},
+          // ],
+          // pro_app_count: [
+          //   {required: true, message: '请输入专业应用数', trigger: 'blur',},
+          // ],
         },
       }
     },
     methods: {
+      close(){
+        this.$emit('closeEnvir', this.addForm)
+      },
       setFormData (formName) {
         let self = this
         self.$refs[formName].validate((valid) => {
@@ -63,7 +73,7 @@
                 self.$message.error('添加环境配置出错!')
               } else {
                 self.$message.success('添加成功!')
-                self.$emit('closeEnvir', self.addForm)
+                self.close();
               }
             })
           } else {
@@ -80,7 +90,17 @@
         this.disabled = false
         this.addForm = val
         if (this.titleTxt == 'see') {
-          this.disabled = true
+          this.disabled = true;
+          this.title = "查看"
+        }
+        if (this.titleTxt == 'add') {
+          this.title = "新增"
+        }
+        if (this.titleTxt == 'clone') {
+          this.title = "克隆"
+        }
+        if (this.titleTxt == 'edit') {
+          this.title = "编辑"
         }
       }
     }
@@ -89,7 +109,13 @@
 
 <style scoped lang="scss">
     @import "@/assets/style/dialog.scss";
-
+    .bottom{
+        .zll-botton {
+            width: 120px;
+            border-radius: 8px;
+            /*margin-left: 90px;*/
+        }
+    }
     .addProject {
         width: 600px;
         margin: 0 auto;

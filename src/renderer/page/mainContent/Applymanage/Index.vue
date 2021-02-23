@@ -1,8 +1,8 @@
 <template>
     <div class="ConfigManage">
-        <div class="top_line">
-            <h1>应 用 管 理</h1>
-        </div>
+        <!--<div class="top_line">-->
+            <!--<h1>应 用 管 理</h1>-->
+        <!--</div>-->
         <div class="config_top_btn">
             <div class="list">
                 <p class="zll-botton" @click="add()">新增配置</p>

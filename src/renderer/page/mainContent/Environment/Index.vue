@@ -1,8 +1,8 @@
 <template>
-    <div class="ConfigManage" >
-        <div class="top_line">
-            <h1>环 境 管 理</h1>
-        </div>
+    <div class="ConfigManage" v-loading="loading">
+        <!--<div class="top_line">-->
+        <!--<h1>环 境 管 理</h1>-->
+        <!--</div>-->
         <div class="config_top_btn">
             <div class="list" @click="cloneEnvir">
                 <p class="zll-botton">克隆环境</p>
@@ -19,19 +19,25 @@
             <div class="clearBoth"></div>
         </div>
         <div class="Search_Top_Input">
-			<div class="input_flex">
-				<el-input clearable v-model="searchInput1" placeholder="环境"></el-input>
-			</div>
-			<div class="input_flex">
-                <el-select clearable v-model="searchInput2" placeholder="环境">
-                    <el-option label="1" value="1"></el-option>
-                    <el-option label="2" value="2"></el-option>
+            <div class="input_flex">
+                <el-input clearable v-model="searchInput1" placeholder="环境名称"></el-input>
+            </div>
+            <div class="input_flex" style="width: 240px">
+                <el-select v-model="queryForm.ENV_ID" placeholder="请选择">
+                    <el-option
+                            v-for="(item,index) in environmentCards"
+                            :key="index"
+                            :label="item.CN_NAME"
+                            :value="item.ENV_ID">
+                        <span style="float: left">{{ item.CN_NAME }}</span>
+                        <span style="float: right; color: #8492a6; font-size: 13px">{{ item.EN_NAME }}</span>
+                    </el-option>
                 </el-select>
-			</div>
-			<div class="">
-				<span class="zll-search">搜索</span>
-				<span class="zll-search-reset">重置</span>
-			</div>
+            </div>
+            <div class="">
+                <span class="zll-search" @click="searchEnvir">搜索</span>
+                <span class="zll-search-reset" @click="resetQuery">重置</span>
+            </div>
         </div>
         <div class="box-contain">
             <div class="box">
@@ -46,14 +52,17 @@
                          :key="index"
                          v-dragging="{ item: envir, list: displayCard, group: 'envir' }"
                          :style="{background:envir.color}">
+                    <!--<div class="new">-->
+                    <!--<img src="@/assets/img/new.png" >-->
+                    <!--</div>-->
                     <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                        {{envir.env_ename}}
+                        {{envir.EN_NAME}}
                     </div>
                     <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                        {{envir.env_cname}}
+                        {{envir.CN_NAME}}
                     </div>
                     <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                        {{envir.comm_app_count}}
+                        组件应用数：{{envir.PRO_APP_COUNT}}
                     </div>
                 </el-card>
                 <el-card class="box-card more" v-show="environmentCards.length > displayLen" @click.native="moreCard">
@@ -64,13 +73,13 @@
             </div>
         </div>
         <div class="zll-dialog">
-            <popout :title="type" :visible.sync="addDialog" v-show="addDialog" class="Config_add">
+            <popout  :visible.sync="addDialog" v-show="addDialog" class="Config_add">
                 <Add ref="add" slot="content" :titleTxt="type" @closeEnvir="closeEnvir" :editData="editData"></Add>
-                <template slot="bottom">
-                    <p class="zll-botton" v-if="type !== '查看'" @click="()=>{this.$refs.add.setFormData('addForm')}">提
-                        交</p>
-                    <p class="zll-botton" v-if="type == '查看'" @click="addDialog = false">确 定</p>
-                </template>
+                <!--<template slot="bottom">-->
+                    <!--<p class="zll-botton" v-if="type !== '查看'" @click="()=>{this.$refs.add.setFormData('addForm')}">提-->
+                        <!--交</p>-->
+                    <!--<p class="zll-botton" v-if="type == '查看'" @click="addDialog = false">确 定</p>-->
+                <!--</template>-->
             </popout>
         </div>
     </div>
@@ -86,7 +95,11 @@
         searchInput2: '',
         displayLen: 16,
         extend: false,
-        queryForm: {},
+        queryForm: {
+          page_num: 1,
+          page_size: 1000,
+          ENV_ID: ''
+        },
         environmentCards: [],
         displayCard: [],
         type: '',
@@ -97,6 +110,17 @@
       }
     },
     methods: {
+      searchEnvir () {
+        this.getEnvirCards();
+      },
+
+      resetQuery () {
+        this.queryForm = {
+          page_num: 1,
+          page_size: 1000,
+          ENV_ID: ''
+        }
+      },
       clickCard (envir) {
         for (let data of this.environmentCards) {
           if (data != envir) {
@@ -105,7 +129,7 @@
         }
         let color = envir.color
         if (!color) {
-          this.$set(envir, 'color', '#f2fbe8')
+          this.$set(envir, 'color', '#b2c7ec')
           this.currentCard = envir
         } else {
           envir.color = ''
@@ -123,29 +147,13 @@
       getEnvirCards () { //获取表格数据
         let self = this
         self.loading = true
-        self.$serRequestService(JSON.stringify(self.queryForm)).then(function (data) {
-          if (data == null) {
+        self.$serRequestService('GetEnv_CODE', JSON.stringify(self.queryForm)).then(function (resp) {
+          if (resp == null) {
             self.$message.error('查询出错!')
           } else {
-            self.environmentCards = [
-              {env_cname: 'tomcat1', env_ename: 'tomcat1', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat2', env_ename: 'tomcat2', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat3', env_ename: 'tomcat3', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat4', env_ename: 'tomcat4', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat5', env_ename: 'tomcat5', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat6', env_ename: 'tomcat6', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat7', env_ename: 'tomcat7', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat8', env_ename: 'tomcat8', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat9', env_ename: 'tomcat9', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat10', env_ename: 'tomcat10', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat11', env_ename: 'tomcat11', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat12', env_ename: 'tomcat12', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat13', env_ename: 'tomcat13', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat14', env_ename: 'tomcat14', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat15', env_ename: 'tomcat15', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat16', env_ename: 'tomcat16', comm_app_count: '2', pro_app_count: '3'},
-              {env_cname: 'tomcat17', env_ename: 'tomcat17', comm_app_count: '2', pro_app_count: '3'},
-            ]
+            let resp_data = JSON.parse(resp)
+            console.log(resp_data.data)
+            self.environmentCards = resp_data.data.list
             if (self.environmentCards.length > 16) {
               self.displayCard = self.environmentCards.slice(0, self.displayLen)
             } else {
@@ -204,7 +212,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          self.$serRequestService(JSON.stringify({env_id:this.currentCard.env_id})).then(function (data) {
+          self.$serRequestService(JSON.stringify({env_id: this.currentCard.env_id})).then(function (data) {
             if (data == null) {
               self.$message.error('删除环境配置出错!')
             } else {
@@ -255,6 +263,7 @@
                 text-align: center;
                 height: 90px;
                 transition: transform .3s;
+                position: relative;
 
                 &.dragging {
                     transform: scale(1.1);
@@ -270,6 +279,12 @@
 
                 &:hover {
                     transform: scale(1.05);
+                }
+
+                .new {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
                 }
 
                 /*&:active {*/

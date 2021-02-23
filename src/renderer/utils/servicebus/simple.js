@@ -7,22 +7,32 @@ function intToByte4 (i) {
   return targets
 }
 
+import urlMap from './UrlMap'
+
 var servicebus = require('./servicebus.js')
 var iconv  = require('iconv-lite');
 //测试用例
 var host = '192.6.77.15'
-var port = 18430
+// var port = 18430
+var port = 18532
 //超时时间，单位秒
 var timeout = 60
 //首次发送失败，是否重发。1：重发，0不重发
 var resendFlag = 1
 
-export const serRequestService = function (params) {
+export const serRequestService = function (url,params) {
   return new Promise(function (resolve, reject) {
-    let byte = intToByte4(0)
+    // let byte = intToByte4(7)
+    let code = urlMap[url];
+    if(!code){
+      console.error("没有找到url!")
+      return;
+    }
+    let byte = [0,0,0,code]
     let str_byte = iconv.encode(params, 'GB2312')
     let code_buf = Buffer.from(byte)
     let buf_total = Buffer.concat([code_buf, str_byte], code_buf.length+str_byte.length);
+    console.log(buf_total)
     //请求数据为Buffer类型，且不能为空(undefined，null，或者request.length==0)，若为空则不发送。
     servicebus.serviceRequest(host, port, buf_total, timeout, resendFlag, function (err, response) {
       let resp_data = "";
@@ -30,6 +40,10 @@ export const serRequestService = function (params) {
         return null;
       } else {
         resp_data = iconv.decode(response, 'gb2312').toString();
+      }
+      let last_str = resp_data.substring(resp_data.length-1);
+      if(last_str == "\0"){
+        resp_data = resp_data.substring(0,resp_data.length-1);
       }
       resolve(resp_data);
     })

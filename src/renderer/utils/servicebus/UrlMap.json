@@ -1,0 +1,21 @@
+{
+  "GetVersion_CODE"        : 0,
+  "UploadFile_CODE"        : 1,
+  "DownloadFile_CODE"      : 2,
+  "AddEnv_CODE"            : 3,
+  "CloneEnv_CODE"          : 4,
+  "DelEnv_CODE"            : 5,
+  "UpdateEnv_CODE"         : 6,
+  "GetEnv_CODE"            : 7,
+  "AddApp_CODE"            : 8,
+  "DelApp_CODE"            : 9,
+  "UpdateApp_CODE"         : 10,
+  "GetApp_CODE"            : 11,
+  "AddFocusApp_CODE"       : 12,
+  "DelFocusApp_CODE"       : 13,
+  "updateFocusApp_CODE"    : 14,
+  "GetFocusApp_CODE"       : 15,
+  "CheckNameRepeat_CODE"   : 16,
+  "DeleteTempData_CODE"    : 100,
+  "TYHTestFunc_CODE"       : 101
+}
