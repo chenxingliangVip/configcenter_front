@@ -1,6 +1,6 @@
 <template>
-    <div class="header" :style="{backgroundColor:$store.state.colorData.top.topBgColor,color:$store.state.colorData.top.topFontColor}">
-        <div class="Title_header" :style="{backgroundColor:$store.state.colorData.top.topBgColor,color:$store.state.colorData.top.topFontColor}" >
+    <div class="header" :style="{backgroundColor:$store.state.leftMenu.colorData.top.topBgColor,color:$store.state.leftMenu.colorData.top.topFontColor}">
+        <div class="Title_header" :style="{backgroundColor:$store.state.leftMenu.colorData.top.topBgColor,color:$store.state.leftMenu.colorData.top.topFontColor}" >
             <img class="Roms" src="@/assets/img/Roms1.png" />
             <span class="splite">|</span> 配置管理系统
         </div>
@@ -9,7 +9,7 @@
             <span class="loginOut" @click="loginOut('Login')">退出</span>
         </div> -->
         <!-- 右侧按钮 -->
-        <div class="header_user" :style="{backgroundColor:$store.state.colorData.top.topBgColor,color:$store.state.colorData.top.topFontColor}">
+        <div class="header_user" :style="{backgroundColor:$store.state.leftMenu.colorData.top.topBgColor,color:$store.state.leftMenu.colorData.top.topFontColor}">
             <!-- <div class="headalist"  @click="showTheme = true">
                 <span class="changeColor" title="切换主题"><i class="el-icon-orange"></i></span>
             </div> -->
@@ -25,13 +25,13 @@
             </div>
         </div>
         <!-- 导航栏 -->
-        <div class="menuListParent" ref="mainViewNavParent" :class="$store.state.leftMenuMin && 'max'">
-            <div class="fold-icon" @click="setLeftMenuMin"><i :class="$store.state.leftMenuMin ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i></div>
+        <div class="menuListParent" ref="mainViewNavParent" :class="$store.state.leftMenu.leftMenuMin && 'max'">
+            <div class="fold-icon" @click="setLeftMenuMin"><i :class="$store.state.leftMenu.leftMenuMin ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i></div>
             <div class="menuList">
                 <li v-for="(item,index) in menuList" :key="item.routeName"
                             @click="goPage(item.routeName)"
                             v-bind:class="{active:$route.name == item.routeName}"
-                            :style="{'background-color': $route.name == item.routeName ? $store.state.colorData.top.topBgColor : '#dddddd','border-color': $route.name == item.routeName ? $store.state.colorData.top.topBgColor : '#cccccc',}">
+                            :style="{'background-color': $route.name == item.routeName ? $store.state.leftMenu.colorData.top.topBgColor : '#dddddd','border-color': $route.name == item.routeName ? $store.state.leftMenu.colorData.top.topBgColor : '#cccccc',}">
                     {{item.name}}
                     <span v-if="index" @click.stop="closePage(index,item.routeName)" class="el-icon-close"></span>
                 </li>
@@ -89,7 +89,7 @@
         },
         methods: {
             setLeftMenuMin(){//设置切换左侧菜单最小化
-                this.$store.commit('SET_leftMenuMin',!this.$store.state.leftMenuMin);
+                this.$store.commit('leftMenu/SET_leftMenuMin',!this.$store.state.leftMenu.leftMenuMin);
             },
             setMenu(routeData){//父组件调用
                 for (let i = 0; i < this.menuList.length; i++) {

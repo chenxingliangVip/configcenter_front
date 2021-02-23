@@ -25,7 +25,7 @@
                     <div class="color-item" v-for="(item,index) in colorDataList" :key="index">
                         <div
                             class="color-block"
-                            v-bind:class="{active:$store.state.colorData.text == item.text}"
+                            v-bind:class="{active:$store.state.leftMenu.colorData.text == item.text}"
                             @click="setColorData(item)"
                         >
                             <div class="top" v-bind:style="{background:item.top.topBgColor}"></div>
@@ -97,7 +97,7 @@ export default {
         },
         setColorData(data) {
             //设置data
-            this.$store.commit("setColorData", data);
+            this.$store.commit("leftMenu/setColorData", data);
             this.close();
         }
     },

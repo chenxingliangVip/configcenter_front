@@ -1,11 +1,11 @@
 <template>
-    <div class="leftMenu" :class="$store.state.leftMenuMin && 'min'">
-        <div class="time" :style="{color:$store.state.colorData.top.topFontColor}" v-show="!$store.state.leftMenuMin && 'min'">
+    <div class="leftMenu" :class="$store.state.leftMenu.leftMenuMin && 'min'">
+        <div class="time" :style="{color:$store.state.leftMenu.colorData.top.topFontColor}" v-show="!$store.state.leftMenu.leftMenuMin && 'min'">
             {{nowDate}} {{nowTime}}
         </div>
         <div class="zll-Menu">
-            <el-menu :class="$store.state.colorData.index"
-                :collapse="$store.state.leftMenuMin"
+            <el-menu :class="$store.state.leftMenu.colorData.index"
+                :collapse="$store.state.leftMenu.leftMenuMin"
                 :collapse-transition="false"
                 :default-active="menuIndexs[$route.name]"
                 class="el-menu-vertical-demo"

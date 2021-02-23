@@ -35,8 +35,6 @@
 </template>
 
 <script>
-  import {getRoutePages} from '@/router'
-
   export default {
     name: 'Login',
     data () {
@@ -50,28 +48,45 @@
     },
     methods: {
       LoginSubmit () {
-        let self = this;
-        let param = {name:"陈兴亮",age:12}
-        self.$serRequestService(JSON.stringify(param)).then(function(data){
-          console.log(data)
-        });
-        if (this.LoginForm.name) {
-          if (this.LoginForm.password) {
-            //登录成功
-            localStorage.setItem('loginStatus', 1) //设置登录状态为已登录
-            localStorage.setItem('userInfo', JSON.stringify(this.LoginForm)) //记录登录信息
-
-            this.$router.addRoutes([getRoutePages()])//添加路由
-            this.$router.push({
-              name: 'FirstPage'
-            })
-            return
-          }
-          this.$message.error('密码不能为空!')
+        let self = this
+        if (!self.LoginForm.name) {
+          self.$message.error('用户名不能为空!')
           return
-        } else {
-          this.$message.error('用户名不能为空!')
         }
+        if (!self.LoginForm.password) {
+          self.$message.error('密码不能为空!')
+          return
+        }
+        setTimeout(function () {
+          // let resp_data = JSON.parse(resp)
+          let testData = {
+            id: '12344234',
+            user_name: '陈兴亮',
+            user_account: 'chenxingliang',
+            role_type: '1',
+            role_name: '管理员'
+          }
+          self.$store.dispatch('user/setLoginUserDetail', testData).then(res => {
+            self.$router.push({path: '/FirstPage'})
+          })
+        },1000)
+        // self.$serRequestService('GetEnv_CODE', JSON.stringify(self.LoginForm)).then(function (resp) {
+        //   if (resp == null) {
+        //     self.$message.error('登陆异常!')
+        //   } else {
+        //     let resp_data = JSON.parse(resp)
+        //     let testData = {
+        //       id: '12344234',
+        //       user_name: '陈兴亮',
+        //       user_account: 'chenxingliang',
+        //       role_type: '1',
+        //       role_name: '管理员'
+        //     }
+        //     self.$store.dispatch('user/setLoginUserDetail', testData).then(res => {
+        //       self.$router.push({path: '/FirstPage'})
+        //     })
+        //   }
+        // })
       }
     },
   }

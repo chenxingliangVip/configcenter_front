@@ -24,6 +24,7 @@ export const serRequestService = function (url,params) {
   return new Promise(function (resolve, reject) {
     // let byte = intToByte4(7)
     let code = urlMap[url];
+    console.log("code:",code);
     if(!code){
       console.error("没有找到url!")
       return;

@@ -21,8 +21,8 @@
                 <!--</el-form-item>-->
             </el-form>
         </div>
-        <div class="bottom" style="text-align: center">
-            <p class="zll-botton"  style="display: inline;margin-right: 20%">提 交</p>
+        <div class="bottom" style="text-align: center;margin-top: 10px">
+            <p class="zll-botton"  style="display: inline;margin-right: 20%" @click="add">提 交</p>
             <p class="zll-botton"  style="display: inline;background: #a1a2a7" @click="close">取 消</p>
         </div>
     </div>
@@ -62,13 +62,14 @@
       close(){
         this.$emit('closeEnvir', this.addForm)
       },
-      setFormData (formName) {
+
+      add () {
         let self = this
-        self.$refs[formName].validate((valid) => {
+        self.$refs['addForm'].validate((valid) => {
           if (valid) {
             let self = this
             self.loading = true
-            self.$serRequestService(JSON.stringify(self.addForm)).then(function (data) {
+            self.$serRequestService('AddEnv_CODE',JSON.stringify(self.addForm)).then(function (data) {
               if (data == null) {
                 self.$message.error('添加环境配置出错!')
               } else {

@@ -34,11 +34,12 @@ import Applymanage from '@/page/mainContent/Applymanage/Index' //项目——我
 // **************登录后访问的路由**********
 export default [
     {
-        path: 'FirstPage',
+        path: '/FirstPage',
         name: 'FirstPage',
         meta: {title: '首页'},
         component: FirstPage
-    }, {
+    }
+    , {
         path: 'MineProject',
         name: 'MineProject',
         meta: {title: '我的项目'},

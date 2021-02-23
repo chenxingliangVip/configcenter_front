@@ -2,6 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 Vue.use(Router)
+const originalPush = Router.prototype.push
+Router.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 
 import page from './page' //登录后访问的页面
 import LeftMenuData from '@/components/LeftMenu/LeftMenuData' //左侧菜单数据
@@ -33,7 +38,8 @@ export default new Router({
       name: '404',
       component: () => import("@/page/notFound")
     }
-  ]
+  ],
+  scrollBehavior: () => ({ y: 0 }),
 })
 function getRouteData(menuData, routeData) {//获取菜单 的路由信息
   routeData = routeData ? routeData : [];

@@ -5,6 +5,7 @@ import  {serRequestService} from './utils/servicebus/simple'
 import App from './App'
 import router from './router'
 import store from './store'
+import  './permission'
 
 import VueDND from 'awe-dnd'
 import ElementUI from 'element-ui'
