@@ -16,7 +16,7 @@ router.beforeEach((to, from, next) => {
         // for(let route of addRoutes){
         //   router.addRoute(route) // 动态添加可访问路由表
         // }
-
+        localStorage.setItem('loginStatus', 1)
         router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
         let path = to.path
         if (false) {
