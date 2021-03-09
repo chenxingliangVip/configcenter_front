@@ -76,7 +76,7 @@
         //   } else {
         //     let resp_data = JSON.parse(resp)
         //     let testData = {
-        //       USER_ID: '100002',
+        //       id: '100002',
         //       user_name: '陈兴亮',
         //       user_account: 'chenxingliang',
         //       role_type: '1',
