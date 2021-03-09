@@ -8,6 +8,8 @@
   "scripts": {
     "package:linux": "electron-packager . --overwrite   --platform=linux -no-sandbox --electron-version=2.0.18 --arch=x64 --asar --out=out --icon=./tray/icon.ico",
     "build": "node .electron-vue/build.js && electron-builder",
+    "package:unbu": "electron-packager . configCenter --platform=linux --arch=x64 --out=./dist --asar --app-version=2.0.1",
+    "package:lin": "electron-builder --publish never --linux",
     "build:dir": "node .electron-vue/build.js && electron-builder --dir",
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
@@ -65,8 +67,11 @@
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",
+    "vue2-editor": "^2.10.2",
+    "vuedraggable": "^2.24.3",
     "vuex": "^3.0.1",
-    "vuex-electron": "^1.0.0"
+    "vuex-electron": "^1.0.0",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "ajv": "^6.5.0",

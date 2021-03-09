@@ -20,51 +20,51 @@
         </div>
         <div class="Search_Top_Input">
             <div class="input_flex">
-                <el-input clearable v-model="searchInput1" placeholder="环境名称"></el-input>
+                <el-input clearable v-model="queryForm.key" placeholder="环境名称"></el-input>
             </div>
             <div class="input_flex" style="width: 240px">
-                <el-select v-model="queryForm.ENV_ID" placeholder="请选择">
+                <el-select v-model="queryForm.ENV_ID" placeholder="请选择" clearable>
                     <el-option
-                            v-for="(item,index) in environmentCards"
+                            v-for="(item,index) in searchList"
                             :key="index"
-                            :label="item.CN_NAME"
+                            :label="item.ENV_CNAME"
                             :value="item.ENV_ID">
-                        <span style="float: left">{{ item.CN_NAME }}</span>
-                        <span style="float: right; color: #8492a6; font-size: 13px">{{ item.EN_NAME }}</span>
+                        <span style="float: left">{{ item.ENV_CNAME }}</span>
+                        <span style="float: right; color: #8492a6; font-size: 13px">{{ item.ENV_ENAME }}</span>
                     </el-option>
                 </el-select>
             </div>
             <div class="">
                 <span class="zll-search" @click="searchEnvir">搜索</span>
-                <span class="zll-search-reset" @click="resetQuery">重置</span>
             </div>
         </div>
-        <div class="box-contain">
-            <div class="box">
-                <el-card class="box-card" style=" background: #A9D96C;cursor: pointer" @click.native="add()">
+        <div>
+            <div  class="box-contain">
+                <el-card class="box-card " style=" background: #A9D96C;cursor: pointer" @click.native="add()">
                     <img src="@/assets/img/plus.png">
                     <div style="color: white;font-size: inherit;font-family: 微软雅黑;font-weight: bold;letter-spacing: 2px">
                         创建项目
                     </div>
                 </el-card>
+                <draggable element="div" v-model="displayCard" class="box"  @change="handleDraggableFormItemChange">
 
-                <el-card @click.native="clickCard(envir)" class="box-card" v-for="(envir ,index) in displayCard "
-                         :key="index"
-                         v-dragging="{ item: envir, list: displayCard, group: 'envir' }"
-                         :style="{background:envir.color}">
-                    <!--<div class="new">-->
-                    <!--<img src="@/assets/img/new.png" >-->
-                    <!--</div>-->
-                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                        {{envir.EN_NAME}}
-                    </div>
-                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                        {{envir.CN_NAME}}
-                    </div>
-                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                        组件应用数：{{envir.PRO_APP_COUNT}}
-                    </div>
-                </el-card>
+                    <el-card @click.native="clickCard(envir)" class="box-card" v-for="(envir ,index) in displayCard "
+                             :key="index"
+                             :style="{background:envir.color}">
+                        <!--<div class="new">-->
+                        <!--<img src="@/assets/img/new.png" >-->
+                        <!--</div>-->
+                        <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                            {{envir.ENV_ENAME}}
+                        </div>
+                        <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                            {{envir.ENV_CNAME}}
+                        </div>
+                        <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                            组件应用数：{{envir.PRO_APP_COUNT}}
+                        </div>
+                    </el-card>
+                </draggable>
                 <el-card class="box-card more" v-show="environmentCards.length > displayLen" @click.native="moreCard">
                     <img src="@/assets/img/more.png" class="img-more" v-show="!extend">
                     <img src="@/assets/img/up.png" class="img-more" v-show="extend">
@@ -87,20 +87,42 @@
 
 <script>
   import Add from './add'
+  import draggable from 'vuedraggable'
 
   export default {
     data () {
       return {
-        searchInput1: '',
-        searchInput2: '',
         displayLen: 16,
         extend: false,
         queryForm: {
           page_num: 1,
           page_size: 1000,
-          ENV_ID: ''
+          ENV_ID: '',
+          key:''
         },
-        environmentCards: [],
+        searchList:[],
+        // environmentCards: [],
+        environmentCards:[
+          {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3",key: "1"},
+          {nameCn:"无服务平台",nameEn:"serverless",count:"2",professCount:"3",key: "2"},
+          {nameCn:"java1",nameEn:"java",count:"2",professCount:"3",key: "3"},
+          {nameCn:"tomcat2",nameEn:"tomcat",count:"2",professCount:"3",key: "4"},
+          {nameCn:"tomcat3",nameEn:"tomcat",count:"2",professCount:"3",key: "5"},
+          {nameCn:"tomcat4",nameEn:"tomcat",count:"2",professCount:"3",key: "6"},
+          {nameCn:"tomcat5",nameEn:"tomcat",count:"2",professCount:"3",key: "7"},
+          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
+          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
+          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
+          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
+          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
+          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
+          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
+          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
+          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
+          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
+          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
+          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
+        ],
         displayCard: [],
         type: '',
         addDialog: false,
@@ -110,16 +132,12 @@
       }
     },
     methods: {
+      handleDraggableFormItemChange(e){
+        console.log("handleDraggableFormItemChange");
+        console.log(e);
+      },
       searchEnvir () {
         this.getEnvirCards();
-      },
-
-      resetQuery () {
-        this.queryForm = {
-          page_num: 1,
-          page_size: 1000,
-          ENV_ID: ''
-        }
       },
       clickCard (envir) {
         for (let data of this.environmentCards) {
@@ -144,24 +162,37 @@
           this.displayCard = this.environmentCards.slice(0, this.displayLen)
         }
       },
+      // getEnvirCards () { //获取表格数据
+      //   let self = this
+      //   self.loading = true
+      //   self.$serRequestService('GetEnv_CODE', JSON.stringify(self.queryForm)).then(function (resp) {
+      //     if (resp == null) {
+      //       self.$message.error('查询出错!')
+      //     } else {
+      //       let resp_data = JSON.parse(resp)
+      //       console.log(resp_data.data)
+      //       self.environmentCards = resp_data.data.list;
+      //       self.searchList = self.searchList.length == 0?JSON.parse(JSON.stringify(self.environmentCards)):self.searchList;
+      //       if (self.environmentCards.length > 16) {
+      //         self.displayCard = self.environmentCards.slice(0, self.displayLen)
+      //       } else {
+      //         self.displayCard = self.environmentCards
+      //       }
+      //       self.loading = false
+      //     }
+      //   })
+      // },
       getEnvirCards () { //获取表格数据
         let self = this
         self.loading = true
-        self.$serRequestService('GetEnv_CODE', JSON.stringify(self.queryForm)).then(function (resp) {
-          if (resp == null) {
-            self.$message.error('查询出错!')
+        setTimeout(()=>{
+          if (self.environmentCards.length > 16) {
+            self.displayCard = self.environmentCards.slice(0, self.displayLen)
           } else {
-            let resp_data = JSON.parse(resp)
-            console.log(resp_data.data)
-            self.environmentCards = resp_data.data.list
-            if (self.environmentCards.length > 16) {
-              self.displayCard = self.environmentCards.slice(0, self.displayLen)
-            } else {
-              self.displayCard = self.environmentCards
-            }
-            self.loading = false
+            self.displayCard = self.environmentCards
           }
-        })
+          self.loading = false
+        },500)
       },
       add () { //新增
         this.addDialog = true
@@ -212,7 +243,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          self.$serRequestService(JSON.stringify({env_id: this.currentCard.env_id})).then(function (data) {
+          self.$serRequestService("DelEnv_CODE",JSON.stringify({ENV_ID: this.currentCard.ENV_ID})).then(function (data) {
             if (data == null) {
               self.$message.error('删除环境配置出错!')
             } else {
@@ -231,8 +262,6 @@
     mounted () {
       this.getEnvirCards() //显示table
       this.$dragging.$on('dragged', ({value}) => {
-        console.log(value.item)
-        console.log(value.list)
         console.log(value)
       })
       this.$dragging.$on('dragend', (res) => {
@@ -241,6 +270,7 @@
     },
     components: {
       Add,
+      draggable
     },
   }
 </script>

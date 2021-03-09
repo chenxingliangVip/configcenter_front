@@ -3,13 +3,13 @@
         <h1>{{title}}环境管理</h1>
         <div class="addForm zll-form">
             <el-form :model="addForm" :rules="rules" ref="addForm" class="demo-ruleForm">
-                <el-form-item class="formList" prop="env_ename" label="中文名：">
-                    <el-input clearable class="input_right" placeholder="请输入中文名" v-model="addForm.env_ename"
-                              :disabled="disabled"></el-input>
+                <el-form-item class="formList" prop="env_cname" label="中文名：">
+                    <el-input clearable class="input_right" placeholder="请输入中文名" v-model="addForm.env_cname"
+                              :disabled="disabled" ></el-input>
                 </el-form-item>
-                <el-form-item class="formList" prop="env_cname" label="英文名：">
-                    <el-input clearable class="input_right" placeholder="请输入英文名" v-model="addForm.env_cname"
-                              :disabled="disabled"></el-input>
+                <el-form-item class="formList" prop="env_ename" label="英文名：">
+                    <el-input clearable class="input_right" placeholder="请输入英文名" v-model="addForm.env_ename"
+                              :disabled="disabled" ></el-input>
                 </el-form-item>
                 <el-form-item class="formList"  label="创建人：">
                     <el-input clearable class="input_right"  v-model="addForm.create_user_name"
@@ -31,9 +31,45 @@
   export default {
     props: ['editData', 'titleTxt'],
     data () {
+      let validateNameCn= (rule, value, callback) => {
+        let self = this;
+        self.$serRequestService('CheckNameRepeat_CODE',JSON.stringify({check_type:4,env_cnname:value})).then(function (data) {
+          if (data != null) {
+            let resp_data = JSON.parse(data)
+            console.log(resp_data)
+            console.log(self.copyData.env_cname)
+            if(self.titleTxt == 'edit'&& self.copyData.env_cname == value){
+              callback();
+            }
+            if (!resp_data.status) {
+              callback(new Error('名称已存在!'));
+            } else {
+              callback();
+            }
+          }
+        })
+      };
+      let validateNameEn= (rule, value, callback) => {
+        let self = this;
+        self.$serRequestService('CheckNameRepeat_CODE',JSON.stringify({check_type:5,env_enname:value})).then(function (data) {
+          if (data != null) {
+            let resp_data = JSON.parse(data)
+            if(self.titleTxt == 'edit'&& self.copyData.env_ename == value){
+              callback();
+            }
+            if (!resp_data.status) {
+              callback(new Error('名称已存在!'));
+            } else {
+              callback();
+            }
+          }
+        })
+      };
       return {
+        //防止多次点击
+        clickMore:false,
         disabled: false,
-        title:"",
+        title:'',
         addForm: {
           env_ename: '',
           env_cname: '',
@@ -42,19 +78,16 @@
           modify_user_id:'',
           modify_user_name:''
         },
+        copyData:{},
         rules: {
-          env_ename: [
-            {required: true, message: '请输入中文名', trigger: 'blur',},
-          ],
           env_cname: [
-            {required: true, message: '请输入英文名', trigger: 'blur',},
+            {required: true, message: '请输入中文名', trigger: 'blur'},
+            {validator: validateNameCn, trigger: 'blur'}
           ],
-          // comm_app_count: [
-          //   {required: true, message: '请输入组件应用数', trigger: 'blur',},
-          // ],
-          // pro_app_count: [
-          //   {required: true, message: '请输入专业应用数', trigger: 'blur',},
-          // ],
+          env_ename: [
+            {required: true, message: '请输入英文名', trigger: 'blur',},
+            {validator: validateNameEn, trigger: 'blur'}
+          ],
         },
       }
     },
@@ -62,14 +95,31 @@
       close(){
         this.$emit('closeEnvir', this.addForm)
       },
+      initUserInfo(){
+        let self = this;
+        let userInfo = self.$store.getters.user.userInfo;
+        if(!userInfo){
+          self.$message.error('获取用户信息出错!');
+          return;
+        }
+        self.addForm.create_user_id = userInfo.id;
+        self.addForm.create_user_name = userInfo.user_name;
+        self.addForm.modify_user_id = userInfo.id;
+        self.addForm.modify_user_name = userInfo.user_name;
+      },
 
       add () {
-        let self = this
+        let self = this;
+        if(self.clickMore){
+            return;
+        }
+        self.clickMore = true;
         self.$refs['addForm'].validate((valid) => {
           if (valid) {
-            let self = this
-            self.loading = true
-            self.$serRequestService('AddEnv_CODE',JSON.stringify(self.addForm)).then(function (data) {
+            self.loading = true;
+            let url = (this.titleTxt == 'add'||this.titleTxt == 'clone')? 'AddEnv_CODE':'UpdateEnv_CODE';
+            self.$serRequestService(url,JSON.stringify(self.addForm)).then(function (data) {
+              self.clickMore = false;
               if (data == null) {
                 self.$message.error('添加环境配置出错!')
               } else {
@@ -78,6 +128,7 @@
               }
             })
           } else {
+            self.clickMore = false;
             return false
           }
         })
@@ -88,10 +139,19 @@
     },
     watch: {
       editData (val) {
-        this.disabled = false
-        this.addForm = val
+        this.disabled = false;
+        this.$refs['addForm'].clearValidate();
+        for(let key in this.addForm){
+          this.addForm[key] = val[key]||"";
+        }
+        this.initUserInfo();
+        if(this.titleTxt != 'add'){
+          this.$set(this.addForm,'env_cname',val.ENV_CNAME);
+          this.$set(this.addForm,'env_ename',val.ENV_ENAME);
+        }
         if (this.titleTxt == 'see') {
           this.disabled = true;
+          this.addForm.create_user_name = val.MODIFY_USER_NAME;
           this.title = "查看"
         }
         if (this.titleTxt == 'add') {
@@ -101,6 +161,10 @@
           this.title = "克隆"
         }
         if (this.titleTxt == 'edit') {
+          this.copyData = Object.assign({},this.addForm);
+          this.addForm.create_user_name = val.MODIFY_USER_NAME;
+          this.addForm.create_user_id = val.CREATE_USER_ID;
+          this.addForm.env_id =val.ENV_ID;
           this.title = "编辑"
         }
       }

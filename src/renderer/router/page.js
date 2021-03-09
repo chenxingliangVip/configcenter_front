@@ -30,6 +30,7 @@ import SystemLog from '@/page/mainContent/System/SystemLog/Index' //系统——
 import Send from '@/page/mainContent/System/Send/Index' //系统——消息发布
 import Environment from '@/page/mainContent/Environment/Index' //项目——我的项目
 import Applymanage from '@/page/mainContent/Applymanage/Index' //项目——我的项目
+import Settingmanage from '@/page/mainContent/Settingmanage/Index' //项目——我的项目
 
 // **************登录后访问的路由**********
 export default [
@@ -198,6 +199,6 @@ export default [
         path: 'settingmanage',
         name: 'settingmanage',
         meta: {title: '配置管理'},
-        component: Applymanage
+        component: Settingmanage
     }
 ]

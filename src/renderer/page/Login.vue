@@ -76,13 +76,17 @@
         //   } else {
         //     let resp_data = JSON.parse(resp)
         //     let testData = {
-        //       id: '12344234',
+        //       USER_ID: '100002',
         //       user_name: '陈兴亮',
         //       user_account: 'chenxingliang',
         //       role_type: '1',
         //       role_name: '管理员'
         //     }
         //     self.$store.dispatch('user/setLoginUserDetail', testData).then(res => {
+        //       let user = self.$store.getters.user;
+        //       if(!user || !user.userInfo){
+        //         self.$message.error('登录异常，请刷新后再登录!')
+        //       }
         //       self.$router.push({path: '/FirstPage'})
         //     })
         //   }

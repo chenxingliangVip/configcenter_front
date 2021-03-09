@@ -1,12 +1,3 @@
-function intToByte4 (i) {
-  var targets = []
-  targets[0] = (i & 0xFF)
-  targets[1] = (i >> 8 & 0xFF)
-  targets[2] = (i >> 16 & 0xFF)
-  targets[3] = (i >> 24 & 0xFF)
-  return targets
-}
-
 import urlMap from './UrlMap'
 
 var servicebus = require('./servicebus.js')
@@ -22,13 +13,13 @@ var resendFlag = 1
 
 export const serRequestService = function (url,params) {
   return new Promise(function (resolve, reject) {
-    // let byte = intToByte4(7)
     let code = urlMap[url];
     console.log("code:",code);
     if(!code){
       console.error("没有找到url!")
       return;
     }
+    console.log("params:"+params)
     let byte = [0,0,0,code]
     let str_byte = iconv.encode(params, 'GB2312')
     let code_buf = Buffer.from(byte)
