@@ -40,36 +40,27 @@
         </div>
         <div>
             <div  class="box-contain">
-                <el-card class="box-card " style=" background: #A9D96C;cursor: pointer" @click.native="add()">
-                    <img src="@/assets/img/plus.png">
-                    <div style="color: white;font-size: inherit;font-family: 微软雅黑;font-weight: bold;letter-spacing: 2px">
-                        创建项目
-                    </div>
-                </el-card>
                 <draggable element="div" v-model="displayCard" class="box"  @change="handleDraggableFormItemChange">
-
+                    <el-card class="box-card add" @click.native="add()">
+                        <img src="@/assets/img/plus.png">
+                        <div class="addclick">创建项目</div>
+                    </el-card>
                     <el-card @click.native="clickCard(envir)" class="box-card" v-for="(envir ,index) in displayCard "
                              :key="index"
                              :style="{background:envir.color}">
                         <!--<div class="new">-->
                         <!--<img src="@/assets/img/new.png" >-->
                         <!--</div>-->
-                        <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                            {{envir.ENV_ENAME}}
-                        </div>
-                        <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                            {{envir.ENV_CNAME}}
-                        </div>
-                        <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                            组件应用数：{{envir.PRO_APP_COUNT}}
-                        </div>
+                        <div class="box_inner"> {{envir.ENV_ENAME}} </div>
+                        <div class="box_inner"> {{envir.ENV_CNAME}} </div>
+                        <div class="box_inner"> 组件应用数：{{envir.PRO_APP_COUNT}} </div>
+                    </el-card>
+                    <el-card class="box-card more" v-show="environmentCards.length > displayLen" @click.native="moreCard">
+                        <img src="@/assets/img/more.png" class="img-more" v-show="!extend">
+                        <img src="@/assets/img/up.png" class="img-more" v-show="extend">
+                        <p style="font-family: 微软雅黑">加载更多</p>
                     </el-card>
                 </draggable>
-                <el-card class="box-card more" v-show="environmentCards.length > displayLen" @click.native="moreCard">
-                    <img src="@/assets/img/more.png" class="img-more" v-show="!extend">
-                    <img src="@/assets/img/up.png" class="img-more" v-show="extend">
-                    <p style="font-family: 微软雅黑">加载更多</p>
-                </el-card>
             </div>
         </div>
         <div class="zll-dialog">
@@ -286,7 +277,12 @@
             display: flex;
             flex-wrap: wrap;
             width: calc(100% - 50px);
-
+            .add {
+                background: #A9D96C;cursor: pointer;
+                .addclick {
+                    color: #fff;font-size: inherit;font-family: 微软雅黑;font-weight: bold;letter-spacing: 2px
+                }
+            }
             .box-card {
                 width: calc(16.667% - 10px);
                 margin: 5px;
@@ -294,7 +290,10 @@
                 height: 90px;
                 transition: transform .3s;
                 position: relative;
-
+                
+                .box_inner {
+                    color: #333;font-size: inherit;
+                }
                 &.dragging {
                     transform: scale(1.1);
                 }
@@ -324,7 +323,7 @@
         }
 
         .more {
-            width: 50px;
+            // width: 50px;
 
             span {
                 cursor: pointer;
