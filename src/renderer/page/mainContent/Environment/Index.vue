@@ -40,11 +40,12 @@
         </div>
         <div>
             <div  class="box-contain">
+                <el-card class="box-card add" @click.native="add()">
+                    <img src="@/assets/img/plus.png">
+                    <div class="addclick">创建项目</div>
+                </el-card>
+
                 <draggable element="div" v-model="displayCard" class="box"  @change="handleDraggableFormItemChange">
-                    <el-card class="box-card add" @click.native="add()">
-                        <img src="@/assets/img/plus.png">
-                        <div class="addclick">创建项目</div>
-                    </el-card>
                     <el-card @click.native="clickCard(envir)" class="box-card" v-for="(envir ,index) in displayCard "
                              :key="index"
                              :style="{background:envir.color}">
@@ -55,12 +56,13 @@
                         <div class="box_inner"> {{envir.ENV_CNAME}} </div>
                         <div class="box_inner"> 组件应用数：{{envir.PRO_APP_COUNT}} </div>
                     </el-card>
-                    <el-card class="box-card more" v-show="environmentCards.length > displayLen" @click.native="moreCard">
-                        <img src="@/assets/img/more.png" class="img-more" v-show="!extend">
-                        <img src="@/assets/img/up.png" class="img-more" v-show="extend">
-                        <p style="font-family: 微软雅黑">加载更多</p>
-                    </el-card>
                 </draggable>
+
+                <el-card class="box-card more" v-show="environmentCards.length > displayLen" @click.native="moreCard">
+                    <img src="@/assets/img/more.png" class="img-more" v-show="!extend">
+                    <img src="@/assets/img/up.png" class="img-more" v-show="extend">
+                    <p style="font-family: 微软雅黑">加载更多</p>
+                </el-card>
             </div>
         </div>
         <div class="zll-dialog">
@@ -269,20 +271,27 @@
     @import "@/assets/style/SearchTop.scss";
 
     .box-contain {
-        display: flex;
-        flex-wrap: wrap;
+        // display: flex;
+        // flex-wrap: wrap;
         height: auto;
 
-        .box {
-            display: flex;
-            flex-wrap: wrap;
-            width: calc(100% - 50px);
-            .add {
-                background: #A9D96C;cursor: pointer;
-                .addclick {
-                    color: #fff;font-size: inherit;font-family: 微软雅黑;font-weight: bold;letter-spacing: 2px
-                }
+        .add {
+            background: #A9D96C;
+            width: calc(16.667% - 10px);
+            margin: 5px;
+            text-align: center;
+            height: 90px;
+            transition: transform .3s;
+            cursor: pointer;
+            float: left;
+            .addclick {
+                color: #fff;font-size: inherit;font-family: 微软雅黑;font-weight: bold;letter-spacing: 2px
             }
+        }
+        .box {
+            // display: flex;
+            // flex-wrap: wrap;
+            width: 100%;
             .box-card {
                 width: calc(16.667% - 10px);
                 margin: 5px;
@@ -290,6 +299,7 @@
                 height: 90px;
                 transition: transform .3s;
                 position: relative;
+                float: left;
                 
                 .box_inner {
                     color: #333;font-size: inherit;
@@ -297,15 +307,6 @@
                 &.dragging {
                     transform: scale(1.1);
                 }
-
-                &.more {
-                    cursor: pointer;
-
-                    .img-more {
-                        width: 25px;
-                    }
-                }
-
                 &:hover {
                     transform: scale(1.05);
                 }
@@ -323,8 +324,17 @@
         }
 
         .more {
-            // width: 50px;
+            width: calc(16.667% - 10px);
+            margin: 5px;
+            text-align: center;
+            height: 90px;
+            transition: transform .3s;
+            cursor: pointer;
+            float: left;
 
+            .img-more {
+                width: 25px;
+            }
             span {
                 cursor: pointer;
                 margin-top: 40px;
