@@ -55,6 +55,12 @@
                         <div class="box_inner"> {{envir.ENV_ENAME}} </div>
                         <div class="box_inner"> {{envir.ENV_CNAME}} </div>
                         <div class="box_inner"> 组件应用数：{{envir.PRO_APP_COUNT}} </div>
+                        <div class="icon_img">
+                            <p class="el-icon-circle-plus-outline"></p>
+                            <p class="el-icon-delete"></p>
+                            <p class="el-icon-edit"></p>
+                            <p class="el-icon-search"></p>
+                        </div>
                     </el-card>
                 </draggable>
 
@@ -315,6 +321,29 @@
                     position: absolute;
                     top: 0;
                     left: 0;
+                }
+                &:hover {
+                    .icon_img {
+                        opacity: 1;
+                        transition: all .5s;
+                    }
+                }
+                .icon_img {
+                    opacity: 0;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 20px;
+                    height: 100%;
+                    p {
+                        font-size: 16px;
+                        margin: 3px 0;
+                        &:hover {
+                            color: #A9D96C;
+                            cursor: pointer;
+                            font-weight: 600;
+                        }
+                    }
                 }
 
                 /*&:active {*/
