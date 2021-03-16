@@ -154,5 +154,9 @@ export default [
         name: 'settingmanage',//路由name
         title: '配置管理',
         icon: 'el-icon-setting',
+    },{
+        name: 'History',//路由name
+        title: '历史管理',
+        icon: 'el-icon-setting',
     },
 ]
