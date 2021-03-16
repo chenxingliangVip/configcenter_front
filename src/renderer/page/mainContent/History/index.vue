@@ -1,5 +1,6 @@
 <template>
     <div class="History"> 
+        <h1 class="title-top-nav">发布历史</h1>
         <el-row>
             <el-col :span="6">
                 <div class="list_top">
@@ -17,13 +18,15 @@
             </el-col>
             <el-col :span="18">
                 <div class="versions">
+                    <p class="txt">（AppId：appstore，环境：DEV，集群：default，Namespace:application）</p>
+                    <p class="zll-botton float">返回到项目首页</p>
                     <div class="version_top">
                         <p>20201212141555-release</p>
                         <span class="date">2020-12-12 14:15:55</span>
                         <div class="button_list">
-                            <p class="zll-botton">回滚到此版本</p>
-                            <p class="zll-botton">变更配置</p>
-                            <p class="zll-botton">全部配置</p>
+                            <p class="zll-botton Info">回滚到此版本</p>
+                            <p class="zll-botton Info">变更配置</p>
+                            <p class="zll-botton Info">全部配置</p>
                         </div>
                         <div class="clearBoth"></div>
                     </div>
@@ -83,6 +86,12 @@ export default {
 
 <style lang="scss" scoped>
 .History {
+    .title-top-nav {
+        font-size: 16px;
+        text-align: center;
+        color: #34BFC6;
+        margin: 15px 0;
+    }
     .list_top {
         display: flex;
         margin-bottom: 15px;
@@ -145,7 +154,19 @@ export default {
         }
     }
     .versions {
-        margin-top: 39px;
+        position: relative;
+        .txt {
+            height: 24px;
+            line-height: 24px;
+            margin-bottom: 15px;
+            color: #999;
+            padding-left: 100px;
+        }
+        .float {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
         .version_top {
             background: #efefef;
             padding: 15px;
