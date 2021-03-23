@@ -65,6 +65,12 @@
         },
         type: Array
       },
+      backCount: {
+        default: function() {
+          return 0;
+        },
+        type: Number
+      },
       isMultipleSelection: {
         default: false,
         type: Boolean,
@@ -132,10 +138,14 @@
         this.upDateTable(val, this.pageSize)
       },
       upDateTable (pageNum, pageSize) {//分页刷新表格
-        if (pageNum === 1) {
-          this.getTableData = this.allTable.slice(0, pageNum * pageSize)
-        } else {
+        if (this.backCount == 0) {
           this.getTableData = this.allTable.slice((pageNum - 1) * pageSize, pageNum * pageSize)
+        } else {
+          this.$emit(
+            "getBackData",
+            pageSize * (pageNum - 1),
+            pageSize
+          );
         }
       },
       cellStyle ({row, column, rowIndex, columnIndex}) {
@@ -169,14 +179,23 @@
     },
     watch: {
       tableData (val) {
-        let getTableData = val
-        this.totalCount = getTableData.length
-        if (this.totalCount <= this.pageSize) {
-          this.getTableData = getTableData
-        } else {
-          this.getTableData = getTableData.slice(0, this.pageSize * this.currentPage)
+        if(this.backCount == 0){
+          let getTableData = val
+          this.totalCount = getTableData.length
+          if (this.totalCount <= this.pageSize) {
+            this.getTableData = getTableData
+          } else {
+            this.getTableData = getTableData.slice(0, this.pageSize * this.currentPage)
+          }
+          this.allTable = JSON.parse(JSON.stringify(val))
+        }else{
+          this.getTableData = val;
+          this.totalCount = this.backCount;
         }
-        this.allTable = JSON.parse(JSON.stringify(val))
+        if (!(this.backCount > 0 && this.currentPage != 1)) {
+          this.currentPage = 1;
+        }
+
       },
       tableLoading (val) {
         this.loading = val
@@ -190,3 +209,11 @@
     }
   }
 </script>
+
+<style>
+    .zll-table thead {
+        font-size: 14px;
+        font-family: initial;
+        font-weight: bold;
+    }
+</style>

@@ -14,7 +14,6 @@ import 'element-ui/lib/theme-chalk/index.css'
 import sysTable from "@/components/Table/Index"; //表格组件
 import popout from '@/components/PopoutDialog/Index' //弹框组件
 
-
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.serRequestService = Vue.prototype.$serRequestService = serRequestService
@@ -25,6 +24,8 @@ Vue.component('popout', popout);
 Vue.use(ElementUI)
 Vue.use(VueDND);
 Vue.use(Vue2Editor);
+
+
 /* eslint-disable no-new */
 new Vue({
   components: { App },

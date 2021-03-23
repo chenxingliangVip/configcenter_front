@@ -15,17 +15,17 @@
                 </el-row>
             </div>
         </div>
-        <div class="label-nav">
-            <div class="labelList" v-for="(item, index) in labelList" :key="index"
-                @mouseenter="showActive(index,1)"
-                @mouseleave="showActive(index,0)"
-                @click="goPage(item.url)"
-            >
-                <img v-show="item.active === 0" :src="item.icon" />
-                <img v-show="item.active === 1" :src="item.hovericon" />
-                <p class="name">{{ item.name }}</p>
-            </div>
-        </div>
+        <!--<div class="label-nav">-->
+            <!--<div class="labelList" v-for="(item, index) in labelList" :key="index"-->
+                <!--@mouseenter="showActive(index,1)"-->
+                <!--@mouseleave="showActive(index,0)"-->
+                <!--@click="goPage(item.url)"-->
+            <!--&gt;-->
+                <!--<img v-show="item.active === 0" :src="item.icon" />-->
+                <!--<img v-show="item.active === 1" :src="item.hovericon" />-->
+                <!--<p class="name">{{ item.name }}</p>-->
+            <!--</div>-->
+        <!--</div>-->
         <div style="clear: both"></div>
         <div class="zll-dialog">
             <popout title="查看通知" :visible.sync="detailDialog" v-if="detailDialog">
@@ -75,13 +75,13 @@ export default {
     components: {
         Detail
     },
-    
+
 };
 </script>
 <style scoped lang="scss">
     .FirstPage {
         .message {
-            padding: 20px 30px;    
+            padding: 20px 30px;
             box-shadow: 0 0 10px #ccc;
             margin: 0 20px;
         }

@@ -11,14 +11,23 @@
                     <el-input clearable class="input_right" placeholder="请输入英文名" v-model="addForm.env_ename"
                               :disabled="disabled" ></el-input>
                 </el-form-item>
+
                 <el-form-item class="formList"  label="创建人：">
                     <el-input clearable class="input_right"  v-model="addForm.create_user_name"
                               disabled></el-input>
                 </el-form-item>
-                <!--<el-form-item class="formList" prop="pro_app_count" label="专业应用数：">-->
-                    <!--<el-input clearable class="input_right" placeholder="请输入专业应用数" v-model="addForm.pro_app_count"-->
-                              <!--:disabled="disabled"></el-input>-->
-                <!--</el-form-item>-->
+
+                <el-form-item class="formList check_box"  label="" v-show="this.addType == 'add'">
+                    <el-checkbox v-model="checked" style="margin-left: 6%;float: left">克隆</el-checkbox>
+                    <el-select @change="cloneChange"  v-model="chooseCloneId" filterable clearable placeholder="请选择" :disabled="!checked" style="float: right;width: 81%">
+                        <el-option
+                                v-for="item in clones"
+                                :key="item.ENV_ID"
+                                :label="item.ENV_CNAME"
+                                :value="item.ENV_ID">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
             </el-form>
         </div>
         <div class="bottom" style="text-align: center;margin-top: 10px">
@@ -29,16 +38,16 @@
 </template>
 <script>
   export default {
-    props: ['editData', 'titleTxt'],
+    props: ['editData', 'addType','cloneList'],
     data () {
       let validateNameCn= (rule, value, callback) => {
         let self = this;
-        self.$serRequestService('CheckNameRepeat_CODE',JSON.stringify({check_type:4,env_cnname:value})).then(function (data) {
+        self.$serRequestService('CheckNameRepeat_CODE',JSON.stringify({check_type:4,env_cname:value})).then(function (data) {
           if (data != null) {
             let resp_data = JSON.parse(data)
             console.log(resp_data)
             console.log(self.copyData.env_cname)
-            if(self.titleTxt == 'edit'&& self.copyData.env_cname == value){
+            if(self.addType == 'edit'&& self.copyData.env_cname == value){
               callback();
             }
             if (!resp_data.status) {
@@ -51,10 +60,10 @@
       };
       let validateNameEn= (rule, value, callback) => {
         let self = this;
-        self.$serRequestService('CheckNameRepeat_CODE',JSON.stringify({check_type:5,env_enname:value})).then(function (data) {
+        self.$serRequestService('CheckNameRepeat_CODE',JSON.stringify({check_type:5,env_ename:value})).then(function (data) {
           if (data != null) {
             let resp_data = JSON.parse(data)
-            if(self.titleTxt == 'edit'&& self.copyData.env_ename == value){
+            if(self.addType == 'edit'&& self.copyData.env_ename == value){
               callback();
             }
             if (!resp_data.status) {
@@ -66,6 +75,7 @@
         })
       };
       return {
+        checked:false,
         //防止多次点击
         clickMore:false,
         disabled: false,
@@ -79,6 +89,8 @@
           modify_user_name:''
         },
         copyData:{},
+        clones:[],
+        chooseCloneId:'',
         rules: {
           env_cname: [
             {required: true, message: '请输入中文名', trigger: 'blur'},
@@ -92,6 +104,12 @@
       }
     },
     methods: {
+      cloneChange(){
+        let self = this;
+        let chooseItem = self.clones.find(item=>item.ENV_ID == self.chooseCloneId);
+        self.addForm.env_ename = chooseItem.ENV_ENAME;
+        self.addForm.env_cname = chooseItem.ENV_CNAME;
+      },
       close(){
         this.$emit('closeEnvir', this.addForm)
       },
@@ -117,13 +135,13 @@
         self.$refs['addForm'].validate((valid) => {
           if (valid) {
             self.loading = true;
-            let url = (this.titleTxt == 'add'||this.titleTxt == 'clone')? 'AddEnv_CODE':'UpdateEnv_CODE';
+            let url = (this.addType == 'add'||this.addType == 'clone')? 'AddEnv_CODE':'UpdateEnv_CODE';
             self.$serRequestService(url,JSON.stringify(self.addForm)).then(function (data) {
               self.clickMore = false;
               if (data == null) {
-                self.$message.error('添加环境配置出错!')
+                self.$message.error('操作环境配置出错!')
               } else {
-                self.$message.success('添加成功!')
+                self.$message.success('操作成功!')
                 self.close();
               }
             })
@@ -140,33 +158,38 @@
     watch: {
       editData (val) {
         this.disabled = false;
+        this.checked = false;
+        this.chooseCloneId = "";
         this.$refs['addForm'].clearValidate();
         for(let key in this.addForm){
           this.addForm[key] = val[key]||"";
         }
         this.initUserInfo();
-        if(this.titleTxt != 'add'){
+        if(this.addType != 'add'){
           this.$set(this.addForm,'env_cname',val.ENV_CNAME);
           this.$set(this.addForm,'env_ename',val.ENV_ENAME);
         }
-        if (this.titleTxt == 'see') {
+        if (this.addType == 'see') {
           this.disabled = true;
           this.addForm.create_user_name = val.MODIFY_USER_NAME;
           this.title = "查看"
         }
-        if (this.titleTxt == 'add') {
+        if (this.addType == 'add') {
           this.title = "新增"
         }
-        if (this.titleTxt == 'clone') {
+        if (this.addType == 'clone') {
           this.title = "克隆"
         }
-        if (this.titleTxt == 'edit') {
+        if (this.addType == 'edit') {
           this.copyData = Object.assign({},this.addForm);
           this.addForm.create_user_name = val.MODIFY_USER_NAME;
           this.addForm.create_user_id = val.CREATE_USER_ID;
           this.addForm.env_id =val.ENV_ID;
           this.title = "编辑"
         }
+      },
+      cloneList(val){
+        this.clones = val;
       }
     }
   }
@@ -174,6 +197,7 @@
 
 <style scoped lang="scss">
     @import "@/assets/style/dialog.scss";
+
     .bottom{
         .zll-botton {
             width: 120px;
@@ -204,5 +228,10 @@
             height: auto !important;
         }
 
+    }
+</style>
+<style>
+    .check_box .el-form-item__content{
+        width: 100% !important;
     }
 </style>

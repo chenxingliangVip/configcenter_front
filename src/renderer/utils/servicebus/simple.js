@@ -4,7 +4,7 @@ var servicebus = require('./servicebus.js')
 var iconv  = require('iconv-lite');
 //测试用例
 var host = '192.6.77.15'
-// var port = 18430
+// var port = 18530
 var port = 18532
 //超时时间，单位秒
 var timeout = 60
@@ -42,7 +42,9 @@ export const serRequestService = function (url,params) {
   })
 }
 
-// //通过代理访问服务
+
+
+// // //通过代理访问服务
 // var proxyHost = '172.28.202.132'//代理地址
 // //  var proxyHost="127.0.0.1";//代理地址
 // var domain = 'JKXT1'

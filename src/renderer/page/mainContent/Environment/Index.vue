@@ -1,29 +1,11 @@
 <template>
     <div class="ConfigManage" v-loading="loading">
-        <!--<div class="top_line">-->
-        <!--<h1>环 境 管 理</h1>-->
-        <!--</div>-->
-        <div class="config_top_btn">
-            <div class="list" @click="cloneEnvir">
-                <p class="zll-botton">克隆环境</p>
-            </div>
-            <div class="list" @click="editEnvir">
-                <p class="zll-botton">编辑环境</p>
-            </div>
-            <div class="list" @click="delEnvir">
-                <p class="zll-botton">删除环境</p>
-            </div>
-            <div class="list" @click="seeEnvir">
-                <p class="zll-botton">查看环境</p>
-            </div>
-            <div class="clearBoth"></div>
-        </div>
         <div class="Search_Top_Input">
             <div class="input_flex">
                 <el-input clearable v-model="queryForm.key" placeholder="环境名称"></el-input>
             </div>
             <div class="input_flex" style="width: 240px">
-                <el-select v-model="queryForm.ENV_ID" placeholder="请选择" clearable>
+                <el-select v-model="queryForm.ENV_ID" placeholder="请选择" clearable filterable>
                     <el-option
                             v-for="(item,index) in searchList"
                             :key="index"
@@ -39,27 +21,23 @@
             </div>
         </div>
         <div>
-            <div  class="box-contain">
+            <div class="box-contain">
                 <el-card class="box-card add" @click.native="add()">
                     <img src="@/assets/img/plus.png">
-                    <div class="addclick">创建项目</div>
+                    <div class="addclick">创建环境</div>
                 </el-card>
 
-                <draggable element="div" v-model="displayCard" class="box"  @change="handleDraggableFormItemChange">
+                <draggable element="div" v-model="displayCard" class="box" @change="handleDraggableFormItemChange">
                     <el-card @click.native="clickCard(envir)" class="box-card" v-for="(envir ,index) in displayCard "
                              :key="index"
                              :style="{background:envir.color}">
-                        <!--<div class="new">-->
-                        <!--<img src="@/assets/img/new.png" >-->
-                        <!--</div>-->
-                        <div class="box_inner"> {{envir.ENV_ENAME}} </div>
-                        <div class="box_inner"> {{envir.ENV_CNAME}} </div>
-                        <div class="box_inner"> 组件应用数：{{envir.PRO_APP_COUNT}} </div>
+                        <div class="box_inner"> {{envir.ENV_ENAME}}</div>
+                        <div class="box_inner"> {{envir.ENV_CNAME}}</div>
+                        <div class="box_inner"> 组件应用数：{{envir.PRO_APP_COUNT}}</div>
                         <div class="icon_img">
-                            <p class="el-icon-circle-plus-outline"></p>
-                            <p class="el-icon-delete"></p>
-                            <p class="el-icon-edit"></p>
-                            <p class="el-icon-search"></p>
+                            <p class="el-icon-delete" title="删除" @click.stop="delEnvir(envir)"></p>
+                            <p class="el-icon-edit" title="编辑" @click.stop="editEnvir(envir)"></p>
+                            <p class="el-icon-search" title="查看" @click.stop="seeEnvir(envir)"></p>
                         </div>
                     </el-card>
                 </draggable>
@@ -72,13 +50,9 @@
             </div>
         </div>
         <div class="zll-dialog">
-            <popout  :visible.sync="addDialog" v-show="addDialog" class="Config_add">
-                <Add ref="add" slot="content" :titleTxt="type" @closeEnvir="closeEnvir" :editData="editData"></Add>
-                <!--<template slot="bottom">-->
-                    <!--<p class="zll-botton" v-if="type !== '查看'" @click="()=>{this.$refs.add.setFormData('addForm')}">提-->
-                        <!--交</p>-->
-                    <!--<p class="zll-botton" v-if="type == '查看'" @click="addDialog = false">确 定</p>-->
-                <!--</template>-->
+            <popout :visible.sync="addDialog" v-show="addDialog" class="Config_add">
+                <Add ref="add" slot="content" :addType="type" @closeEnvir="closeEnvir" :cloneList="cloneList"
+                     :editData="editData"></Add>
             </popout>
         </div>
     </div>
@@ -97,61 +71,102 @@
           page_num: 1,
           page_size: 1000,
           ENV_ID: '',
-          key:''
+          key: '',
         },
-        searchList:[],
-        // environmentCards: [],
-        environmentCards:[
-          {nameCn:"tomcat",nameEn:"tomcat",count:"2",professCount:"3",key: "1"},
-          {nameCn:"无服务平台",nameEn:"serverless",count:"2",professCount:"3",key: "2"},
-          {nameCn:"java1",nameEn:"java",count:"2",professCount:"3",key: "3"},
-          {nameCn:"tomcat2",nameEn:"tomcat",count:"2",professCount:"3",key: "4"},
-          {nameCn:"tomcat3",nameEn:"tomcat",count:"2",professCount:"3",key: "5"},
-          {nameCn:"tomcat4",nameEn:"tomcat",count:"2",professCount:"3",key: "6"},
-          {nameCn:"tomcat5",nameEn:"tomcat",count:"2",professCount:"3",key: "7"},
-          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
-          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
-          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
-          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
-          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
-          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
-          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
-          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
-          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
-          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
-          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
-          {nameCn:"tomcat6",nameEn:"tomcat",count:"2",professCount:"3",key: "8"},
-        ],
+        searchList: [],
+        cloneList: [],
+        environmentCards: [],
         displayCard: [],
         type: '',
         addDialog: false,
         loading: true, //table刷新
-        currentCard: null,
         editData: {}
       }
     },
     methods: {
-      handleDraggableFormItemChange(e){
-        console.log("handleDraggableFormItemChange");
-        console.log(e);
-      },
-      searchEnvir () {
-        this.getEnvirCards();
-      },
-      clickCard (envir) {
-        for (let data of this.environmentCards) {
-          if (data != envir) {
-            this.$set(data, 'color', '')
+      handleDraggableFormItemChange (e) {
+        console.log('handleDraggableFormItemChange')
+        let self = this;
+        let moved = e.moved
+        let newIndex = moved.newIndex
+        let updateEnv = []
+        //拖拽到第一个
+        if (newIndex == 0) {
+          if (this.displayCard.length > 1) {
+            let second = this.displayCard[1]
+            let order_index = second.SORT_INDEX
+            let element = moved.element
+            let update = {}
+            update.env_id = element.ENV_ID
+            update.sort_index = order_index + 1
+            updateEnv.push(update)
           }
         }
-        let color = envir.color
-        if (!color) {
-          this.$set(envir, 'color', '#b2c7ec')
-          this.currentCard = envir
+        //拖拽到最后
+        else if (newIndex == this.displayCard.length - 1) {
+          if (this.displayCard.length > 1) {
+            let pre = this.displayCard[newIndex - 1]
+            let order_index = pre.SORT_INDEX
+            let element = moved.element
+            let update = {}
+            update.env_id = element.ENV_ID
+            update.sort_index = order_index - 1
+            updateEnv.push(update)
+          }
         } else {
-          envir.color = ''
-          this.currentCard = null
+          if (this.displayCard.length > 2) {
+            let next = this.displayCard[newIndex + 1]
+            let newOrderIndex = next.SORT_INDEX + 1
+            let element = moved.element
+            let update = {}
+            update.env_id = element.ENV_ID
+            update.sort_index = newOrderIndex - 1
+            updateEnv.push(update);
+            this.getAllUpdateList(updateEnv,newIndex -1,newOrderIndex);
+          }
         }
+        console.log(updateEnv)
+        if(updateEnv.length > 0){
+          let params = {list:updateEnv};
+          self.$serRequestService('UpdateEnv_CODE', JSON.stringify(params)).then(function (resp) {
+            console.log(resp)
+          })
+        }
+      },
+
+      getAllUpdateList (updateEnv, index, orderIndex) {
+        if (index >= 0) {
+          let pre = this.displayCard[index]
+          if (pre.SORT_INDEX <= orderIndex) {
+            let update = {}
+            update.env_id = pre.ENV_ID
+            update.sort_index = pre.SORT_INDEX + 1
+            updateEnv.push(update)
+          }
+          index--
+          if (index > 0) {
+            this.getAllUpdateList(updateEnv,index,pre.SORT_INDEX);
+          }
+        }
+      },
+      searchEnvir () {
+        this.getEnvirCards()
+      },
+      clickCard (envir) {
+        // for (let data of this.environmentCards) {
+        //   if (data != envir) {
+        //     this.$set(data, 'color', '')
+        //   }
+        // }
+        // let color = envir.color
+        // if (!color) {
+        //   this.$set(envir, 'color', '#b2c7ec')
+        //   this.currentCard = envir
+        // } else {
+        //   envir.color = ''
+        //   this.currentCard = null
+        // }
+
       },
       moreCard () {
         this.extend = !this.extend
@@ -161,38 +176,38 @@
           this.displayCard = this.environmentCards.slice(0, this.displayLen)
         }
       },
-      // getEnvirCards () { //获取表格数据
-      //   let self = this
-      //   self.loading = true
-      //   self.$serRequestService('GetEnv_CODE', JSON.stringify(self.queryForm)).then(function (resp) {
-      //     if (resp == null) {
-      //       self.$message.error('查询出错!')
-      //     } else {
-      //       let resp_data = JSON.parse(resp)
-      //       console.log(resp_data.data)
-      //       self.environmentCards = resp_data.data.list;
-      //       self.searchList = self.searchList.length == 0?JSON.parse(JSON.stringify(self.environmentCards)):self.searchList;
-      //       if (self.environmentCards.length > 16) {
-      //         self.displayCard = self.environmentCards.slice(0, self.displayLen)
-      //       } else {
-      //         self.displayCard = self.environmentCards
-      //       }
-      //       self.loading = false
-      //     }
-      //   })
-      // },
       getEnvirCards () { //获取表格数据
         let self = this
         self.loading = true
-        setTimeout(()=>{
-          if (self.environmentCards.length > 16) {
-            self.displayCard = self.environmentCards.slice(0, self.displayLen)
+        self.$serRequestService('GetEnv_CODE', JSON.stringify(self.queryForm)).then(function (resp) {
+          if (resp == null) {
+            self.$message.error('查询出错!')
           } else {
-            self.displayCard = self.environmentCards
+            let resp_data = JSON.parse(resp)
+            console.log(resp_data.data)
+            self.environmentCards = resp_data.data.list
+            self.searchList = self.searchList.length == 0 ? JSON.parse(JSON.stringify(self.environmentCards)) : self.searchList
+            if (self.environmentCards.length > 16) {
+              self.displayCard = self.environmentCards.slice(0, self.displayLen)
+            } else {
+              self.displayCard = self.environmentCards
+            }
+            self.loading = false
           }
-          self.loading = false
-        },500)
+        })
       },
+      // getEnvirCards () { //获取表格数据
+      //   let self = this
+      //   self.loading = true
+      //   setTimeout(()=>{
+      //     if (self.environmentCards.length > 16) {
+      //       self.displayCard = self.environmentCards.slice(0, self.displayLen)
+      //     } else {
+      //       self.displayCard = self.environmentCards
+      //     }
+      //     self.loading = false
+      //   },500)
+      // },
       add () { //新增
         this.addDialog = true
         this.editData = {
@@ -200,49 +215,35 @@
           env_cname: '',
           comm_app_count: '',
           pro_app_count: '',
-        },
-          this.type = 'add'
-      },
-      editEnvir () { //编辑
-        if (this.currentCard == null) {
-          this.$message.warning('请选中需要编辑的配置项!')
-          return
         }
-        this.editData = Object.assign({}, this.currentCard)
+        this.type = 'add'
+        this.cloneList = JSON.parse(JSON.stringify(this.searchList))
+      },
+      editEnvir (envir) { //编辑
+        this.editData = Object.assign({}, envir)
         this.addDialog = true
         this.type = 'edit'
       },
 
-      cloneEnvir () { //编辑
-        if (this.currentCard == null) {
-          this.$message.warning('请选中需要克隆的配置项!')
-          return
-        }
-        this.editData = Object.assign({}, this.currentCard)
+      cloneEnvir (envir) { //编辑
+        this.editData = Object.assign({}, envir)
         this.addDialog = true
         this.type = 'clone'
       },
-      seeEnvir () { //查看
-        if (this.currentCard == null) {
-          this.$message.warning('请选中需要查看的配置项!')
-          return
-        }
-        this.editData = Object.assign({}, this.currentCard)
+      seeEnvir (envir) { //查看
+        this.editData = Object.assign({}, envir)
         this.addDialog = true
         this.type = 'see'
       },
-      delEnvir () { //删除
+      delEnvir (envir) { //删除
         let self = this
-        if (self.currentCard == null) {
-          self.$message.warning('请选中需要删除的配置项!')
-          return
-        }
+        let ids = {lists: [{id:envir.ENV_ID}]}
         self.$confirm('确定删除该记录？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          self.$serRequestService("DelEnv_CODE",JSON.stringify({ENV_ID: this.currentCard.ENV_ID})).then(function (data) {
+          self.$serRequestService('DelEnv_CODE', JSON.stringify(ids)).then(function (data) {
             if (data == null) {
               self.$message.error('删除环境配置出错!')
             } else {
@@ -290,14 +291,21 @@
             transition: transform .3s;
             cursor: pointer;
             float: left;
+
             .addclick {
-                color: #fff;font-size: inherit;font-family: 微软雅黑;font-weight: bold;letter-spacing: 2px
+                color: #fff;
+                font-size: inherit;
+                font-family: 微软雅黑;
+                font-weight: bold;
+                letter-spacing: 2px
             }
         }
+
         .box {
             // display: flex;
             // flex-wrap: wrap;
             width: 100%;
+
             .box-card {
                 width: calc(16.667% - 10px);
                 margin: 5px;
@@ -306,13 +314,16 @@
                 transition: transform .3s;
                 position: relative;
                 float: left;
-                
+
                 .box_inner {
-                    color: #333;font-size: inherit;
+                    color: #333;
+                    font-size: inherit;
                 }
+
                 &.dragging {
                     transform: scale(1.1);
                 }
+
                 &:hover {
                     transform: scale(1.05);
                 }
@@ -322,12 +333,14 @@
                     top: 0;
                     left: 0;
                 }
+
                 &:hover {
                     .icon_img {
                         opacity: 1;
                         transition: all .5s;
                     }
                 }
+
                 .icon_img {
                     opacity: 0;
                     position: absolute;
@@ -335,14 +348,28 @@
                     right: 0;
                     width: 20px;
                     height: 100%;
+
                     p {
                         font-size: 16px;
                         margin: 3px 0;
+
                         &:hover {
                             color: #A9D96C;
                             cursor: pointer;
                             font-weight: 600;
                         }
+                    }
+
+                    .el-icon-delete {
+                        color: #b50e0e;
+                    }
+
+                    .el-icon-edit {
+                        color: blue;
+                    }
+
+                    .el-icon-search {
+                        color: black;
                     }
                 }
 
@@ -364,6 +391,7 @@
             .img-more {
                 width: 25px;
             }
+
             span {
                 cursor: pointer;
                 margin-top: 40px;

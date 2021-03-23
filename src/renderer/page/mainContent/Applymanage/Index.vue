@@ -1,36 +1,20 @@
 <template>
     <div class="ConfigManage">
-        <!--<div class="top_line">-->
-        <!--<h1>应 用 管 理</h1>-->
-        <!--</div>-->
-        <div class="config_top_btn">
-            <div class="list">
-                <p class="zll-botton" @click="add()">新增配置</p>
-            </div>
-            <div class="list">
-                <p class="zll-botton">编辑配置</p>
-            </div>
-            <div class="list">
-                <p class="zll-botton">删除配置</p>
-            </div>
-            <div class="list">
-                <p class="zll-botton">返回</p>
-            </div>
-            <div class="clearBoth"></div>
-        </div>
         <div class="Search_Top_Input">
             <div class="input_flex">
-                <el-input clearable v-model="searchInput1" placeholder="环境"></el-input>
-            </div>
-            <div class="input_flex">
-                <el-select clearable v-model="searchInput2" placeholder="环境">
-                    <el-option label="1" value="1"></el-option>
-                    <el-option label="2" value="2"></el-option>
+                <el-select v-model="queryForm.env_id" placeholder="请选择" clearable filterable>
+                    <el-option
+                            v-for="(item,index) in searchList"
+                            :key="index"
+                            :label="item.ENV_CNAME"
+                            :value="item.ENV_ID">
+                        <span style="float: left">{{ item.ENV_CNAME }}</span>
+                        <span style="float: right; color: #8492a6; font-size: 13px">{{ item.ENV_ENAME }}</span>
+                    </el-option>
                 </el-select>
             </div>
             <div class="">
-                <span class="zll-search">搜索</span>
-                <span class="zll-search-reset">重置</span>
+                <span class="zll-search" @click="searchApp">搜索</span>
             </div>
         </div>
         <div class="box-contain contain1">
@@ -38,14 +22,14 @@
                 <div class="txt">我的项目</div>
             </div>
             <div class="box">
-                <el-card class="box-card" style=" background: #A9D96C;">
+                <el-card class="box-card add" style=" background: #A9D96C;" @click.native="addApp()">
                     <img src="@/assets/img/plus.png">
                     <div style="color: white;font-size: inherit;font-family: 微软雅黑;font-weight: bold;letter-spacing: 2px">
-                        创建项目
+                        创建应用
                     </div>
                 </el-card>
 
-                <el-card class="box-card" v-for="envir in myApp.displayCard " :key="envir.key"
+                <el-card class="box-card card" v-for="envir in myApp.displayCard " :key="envir.key"
                          v-dragging="{ item: envir, list:  myApp.displayCard, group: 'envir' }">
                     <div class="new"  v-show="envir.tag">
                         <img src="@/assets/img/new.png">
@@ -56,11 +40,17 @@
                     <div style="color: black;font-size: inherit;font-family: 微软雅黑">
                         {{envir.APP_ENAME}}
                     </div>
+                    <div class="icon_img">
+                        <!--<p class="el-icon-circle-plus-outline" title="克隆" @click.stop="cloneEnvir"></p>-->
+                        <p class="el-icon-delete" title="删除" @click.stop="delApp(envir)"></p>
+                        <p class="el-icon-edit" title="编辑" @click.stop="editApp(envir)"></p>
+                        <p class="el-icon-search" title="查看" @click.stop="seeApp(envir)"></p>
+                    </div>
                     <!--<div style="color: black;font-size: inherit;font-family: 微软雅黑">-->
                     <!--{{envir.count}}-->
                     <!--</div>-->
                 </el-card>
-                <el-card class="box-card more" v-show="myApp.myAppCards.length > 10" @click="moreMyAppCard">
+                <el-card class="box-card more" v-show="myApp.myAppCards.length > 10" @click.native="moreMyAppCard">
                     <img src="@/assets/img/more.png" class="img-more" v-show="!myApp.extend">
                     <img src="@/assets/img/up.png" class="img-more" v-show="myApp.extend">
                     <p style="font-family: 微软雅黑">加载更多</p>
@@ -73,20 +63,20 @@
                 <div class="txt">收藏的项目</div>
             </div>
             <div class="box">
-                <el-card class="box-card" v-for="envir in favApp.displayCard " :key="envir.key"
+                <el-card class="box-card card" v-for="envir in favApp.displayCard " :key="envir.key"
                          v-dragging="{ item: envir, list: favApp.displayCard , group: 'envir' }">
-                    <div class="new">
-                        <img src="@/assets/img/new.png">
+                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                        {{envir.APP_CNAME}}
                     </div>
                     <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                        {{envir.nameCn}}
+                        {{envir.APP_ENAME}}
                     </div>
-                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                        {{envir.nameEn}}
+                    <div class="icon_img">
+                        <p class="el-icon-star-on"  style="font-size: 21px" title="取消收藏" @click.stop="delCollectionApp(envir,'1')"></p>
                     </div>
-                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                        {{envir.count}}
-                    </div>
+                    <!--<div style="color: black;font-size: inherit;font-family: 微软雅黑">-->
+                        <!--{{envir.count}}-->
+                    <!--</div>-->
                 </el-card>
                 <el-card class="box-card more" v-if="favApp.myAppCards.length > 10" @click="moreFavAppCard">
                     <img src="@/assets/img/more.png" class="img-more" v-show="!favApp.extend">
@@ -101,28 +91,29 @@
                 <div class="txt">最近浏览的项目</div>
             </div>
             <div class="box">
-                <el-card class="box-card" v-for="envir in hisApp.displayCard " :key="envir.key"
+                <el-card class="box-card card" v-for="envir in hisApp.displayCard " :key="envir.key"
                          v-dragging="{ item: envir, list: hisApp.displayCard, group: 'envir' }">
-                    <div class="new">
-                        <img src="@/assets/img/new.png">
+                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
+                        {{envir.APP_CNAME}}
                     </div>
                     <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                        {{envir.nameCn}}
+                        {{envir.APP_ENAME}}
                     </div>
-                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                        {{envir.nameEn}}
+                    <div class="icon_img">
+                        <p class="el-icon-star-off"  style="font-size: 19px" title="收藏" @click.stop="collectionApp(envir)"></p>
+                        <p class="el-icon-delete"  title="删除" @click.stop="delCollectionApp(envir,'2')"></p>
                     </div>
-                    <div style="color: black;font-size: inherit;font-family: 微软雅黑">
-                        {{envir.count}}
-                    </div>
-                </el-card>
-                <el-card class="box-card more" v-if="hisApp.myAppCards.length > 10" @click="moreHisAppCard">
-                    <img src="@/assets/img/more.png" class="img-more" v-show="!hisApp.extend">
-                    <img src="@/assets/img/up.png" class="img-more" v-show="hisApp.extend">
-                    <p style="font-family: 微软雅黑">加载更多</p>
+                    <!--<div style="color: black;font-size: inherit;font-family: 微软雅黑">-->
+                        <!--{{envir.count}}-->
+                    <!--</div>-->
                 </el-card>
             </div>
             <div class="clearBoth"></div>
+        </div>
+        <div class="zll-dialog">
+            <popout :visible.sync="addDialog" v-show="addDialog" class="Config_add">
+                <Add ref="add" slot="content" :addType="type" :editData="editData" :envList="searchList" @closeApp="closeApp"></Add>
+            </popout>
         </div>
     </div>
 </template>
@@ -133,47 +124,16 @@
   export default {
     data () {
       return {
-        searchInput1: '',
-        searchInput2: '',
-        environmentCards: [
-          {nameCn: 'tomcat', nameEn: 'tomcat', count: '2', professCount: '3', key: '1'},
-          {nameCn: '无服务平台', nameEn: 'serverless', count: '2', professCount: '3', key: '2'},
-          {nameCn: 'java1', nameEn: 'java', count: '2', professCount: '3', key: '3'},
-          {nameCn: 'tomcat2', nameEn: 'tomcat', count: '2', professCount: '3', key: '4'},
-          {nameCn: 'tomcat3', nameEn: 'tomcat', count: '2', professCount: '3', key: '5'},
-          {nameCn: 'tomcat4', nameEn: 'tomcat', count: '2', professCount: '3', key: '6'},
-          {nameCn: 'tomcat5', nameEn: 'tomcat', count: '2', professCount: '3', key: '7'},
-          {nameCn: 'tomcat6', nameEn: 'tomcat', count: '2', professCount: '3', key: '8'},
-        ],
+        searchList:[],
         type: '',
         addDialog: false,
-        searchData1: '',
-        searchData2: '',
-        tableData: [
-          {
-            date: 'dname1',
-            name: 'jkxt-proxy',
-            address: '无信息',
-            state: '2016-05-02'
-          }, {
-            date: 'css-sta1',
-            name: 'jkxt-graph',
-            address: '内存配置升级',
-            state: '2016-05-02'
-          }, {
-            date: 'css-sta2',
-            name: 'jkxt1',
-            address: '服务器地址更新',
-            state: '2016-05-02'
-          },
-        ],
-        tableHeader: [],
-        tableLoading: true, //table刷新，
-
+        editData:{},
         queryForm: {
           page_num: 1,
           page_size: 1000,
-          USER_ID:'100002'
+          user_id:'',
+          focus_type:'',
+          env_id:''
         },
 
         myApp: {
@@ -189,7 +149,6 @@
           extend:false
         },
         hisApp: {
-          myAppCards: [],
           displayCard: [],
           loading: false,
           extend:false
@@ -197,12 +156,159 @@
       }
     },
     methods: {
+      closeApp(){
+        this.getMyAppList();
+        this.addDialog = false
+      },
+      searchApp(){
+        this.getMyAppList();
+        this.getFavList();
+        this.getHisList();
+      },
+      initUserInfo(object){
+        let self = this;
+        let userInfo = self.$store.getters.user.userInfo;
+        if(!userInfo){
+          self.$message.error('获取用户信息出错!');
+          return;
+        }
+        if(this.type == 'add'){
+          object.create_user_id = userInfo.id;
+          object.create_user_name = userInfo.user_name;
+        }
+        object.modify_user_id = userInfo.id;
+        object.modify_user_name = userInfo.user_name;
+      },
+      addApp(){
+        this.addDialog = true
+        this.type = 'add'
+        let editData = {
+          app_ename: '',
+          app_cname: '',
+          app_id:'',
+          env_id:'',
+        }
+        this.initUserInfo(editData);
+        this.editData = editData;
+
+      },
+      editApp (item) { //编辑
+        this.type = 'edit'
+        let editData = {
+          app_ename: '',
+          app_cname: '',
+          app_id:'',
+          env_id:'',
+        };
+        this.initUserInfo(editData);
+        editData.app_ename = item.APP_ENAME;
+        editData.app_cname = item.APP_CNAME;
+        editData.app_id = item.APP_ID;
+        editData.env_id = item.ENV_ID;
+        editData.create_user_id = item.CREATE_USER_ID;
+        editData.create_user_name = item.CREATE_USER_NAME;
+        this.editData = editData;
+        this.addDialog = true
+      },
+
+      seeApp (item) { //查看
+        let editData = {
+          app_ename: '',
+          app_cname: '',
+          app_id:'',
+          env_id:'',
+        };
+        this.initUserInfo(editData);
+        editData.app_ename = item.APP_ENAME;
+        editData.app_cname = item.APP_CNAME;
+        editData.app_id = item.APP_ID;
+        editData.env_id = item.ENV_ID;
+        editData.create_user_id = item.CREATE_USER_ID;
+        editData.create_user_name = item.CREATE_USER_NAME;
+        this.editData = editData;
+        this.addDialog = true
+        this.type = 'see'
+      },
+
+      delApp (item) { //删除
+        let self = this
+        let ids = {ids: [item.APP_ID]}
+        self.$confirm('确定删除该记录？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          self.$serRequestService('DelApp_CODE', JSON.stringify(ids)).then(function (data) {
+            if (data == null||!JSON.parse(data).status) {
+              self.$message.error('删除环境配置出错!')
+            } else {
+              self.$message.success('删除成功!')
+              self.getMyAppList()
+            }
+          })
+        })
+      },
+      getEnvirQueryList () { //获取表格数据
+        let self = this
+        let queryForm = { page_num: 1, page_size: 1000,};
+        self.$serRequestService('GetEnv_CODE', JSON.stringify(queryForm)).then(function (resp) {
+          if (resp == null) {
+            self.$message.error('查询出错!')
+          } else {
+            let resp_data = JSON.parse(resp)
+            self.searchList =  resp_data.data.list;
+          }
+        })
+      },
+
+      collectionApp(item){
+        let self = this;
+        let userInfo = self.$store.getters.user.userInfo;
+        let param = {};
+        param.user_id = userInfo.id;
+        param.app_id = item.APP_ID;
+        param.focus_type = '1';
+        self.$serRequestService('AddFocusApp_CODE', JSON.stringify(param)).then(function (data) {
+          if (data == null||!JSON.parse(data).status) {
+            self.$message.error('已经收藏!')
+          } else {
+            self.$message.success('收藏成功!')
+            self.getFavList();
+            self.getHisList();
+          }
+        })
+      },
+
+      delCollectionApp(item,type){
+        let self = this;
+        let userInfo = self.$store.getters.user.userInfo;
+        let param = {list:[{user_id:userInfo.id,app_id:item.APP_ID,focus_type:type}]};
+        self.$confirm(type=='1'?'确定取消收藏？':'确定删除', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          self.$serRequestService('DelFocusApp_CODE', JSON.stringify(param)).then(function (data) {
+            if (data == null||!JSON.parse(data).status) {
+              self.$message.error(type=='1'?'取消收藏出错!':'删除出错')
+            } else {
+              self.$message.success(type=='1'?'取消收藏成功!':'删除成功')
+              if(type == '1'){
+                self.getFavList();
+              }
+              if(type == '2'){
+                self.getHisList();
+              }
+            }
+          })
+        })
+      },
       moreMyAppCard(){
         this.myApp.extend = !this.myApp.extend
         if (this.myApp.extend) {
           this.myApp.displayCard = this.myApp.myAppCards
         } else {
-          this.myApp.displayCard = this.myApp.environmentCards.slice(0, 10)
+          this.myApp.displayCard = this.myApp.myAppCards.slice(0, 10)
         }
       },
 
@@ -211,18 +317,10 @@
         if (this.favApp.extend) {
           this.favApp.displayCard = this.favApp.myAppCards
         } else {
-          this.favApp.displayCard = this.favApp.environmentCards.slice(0, 10)
+          this.favApp.displayCard = this.favApp.myAppCards.slice(0, 10)
         }
       },
 
-      moreHisAppCard(){
-        this.hisApp.extend = !this.hisApp.extend
-        if (this.hisApp.extend) {
-          this.hisApp.displayCard = this.hisApp.myAppCards
-        } else {
-          this.hisApp.displayCard = this.hisApp.environmentCards.slice(0, 10)
-        }
-      },
       getMyAppList () {
         let self = this
         self.myApp.loading = true
@@ -251,13 +349,39 @@
         })
       },
 
-      getFavAndHisList () {
+      getHisList () {
         let self = this
-        self.favApp.loading = true
+        let user = self.$store.getters.user;
+        self.queryForm.user_id = user.userInfo.id
         self.hisApp.loading = true
+        self.hisApp.displayCard = [];
+        let param = Object.assign({}, self.queryForm);
+        param.focus_type='2';
+        self.$serRequestService('GetFocusApp_CODE', JSON.stringify(param)).then(function (resp) {
+          if (resp == null) {
+            self.$message.error('查询出错!')
+          } else {
+            let resp_data = JSON.parse(resp)
+            for (let data of resp_data.data.list) {
+              self.hisApp.displayCard.push(data);
+              if(self.hisApp.displayCard.length >= 6){
+                return;
+              }
+            }
+            self.hisApp.loading = false
+          }
+        })
+      },
+
+      getFavList () {
+        let self = this
+        let user = self.$store.getters.user;
+        self.queryForm.user_id = user.userInfo.id
+        self.favApp.loading = true
         self.favApp.myAppCards = [];
-        self.hisApp.myAppCards = [];
-        self.$serRequestService('GetFocusApp_CODE', JSON.stringify(self.queryForm)).then(function (resp) {
+        let param = Object.assign({}, self.queryForm);
+        param.focus_type = '1';
+        self.$serRequestService('GetFocusApp_CODE', JSON.stringify(param)).then(function (resp) {
           if (resp == null) {
             self.$message.error('查询出错!')
           } else {
@@ -265,70 +389,23 @@
             console.log("-------------")
             console.log(resp_data.data)
             for (let data of resp_data.data.list) {
-              let type = data.FOCUS_TYPE;
-              if(type == 1){
-                self.favApp.myAppCards.push(data)
-              }else {
-                self.hisApp.myAppCards.push(data)
-              }
+              self.favApp.myAppCards.push(data)
             }
             if (self.favApp.myAppCards.length > 10) {
               self.favApp.displayCard = self.favApp.myAppCards.slice(0, 10)
             } else {
               self.favApp.displayCard = self.favApp.myAppCards
             }
-
-            if (self.hisApp.myAppCards.length > 10) {
-              self.hisApp.displayCard = self.hisApp.myAppCards.slice(0, 10)
-            } else {
-              self.hisApp.displayCard = self.hisApp.myAppCards
-            }
             self.favApp.loading = false
-            self.hisApp.loading = false
           }
         })
-      },
-      getTableList () { //获取表格数据
-        this.tableLoading = true
-        setTimeout(() => {
-          for (let i = 0; i < this.tableData.length; i++) {
-            this.tableData[i]['index'] = i + 1
-          }
-          this.tableHeader = [
-            {columnValue: 'index', columnName: '序号', width: '50'},
-            {columnValue: 'date', columnName: '配置项',},
-            {columnValue: 'name', columnName: '配置值'},
-            {columnValue: 'address', columnName: '备注'},
-            {columnValue: 'state', columnName: '更新时间'},
-          ]
-          this.tableData = JSON.parse(JSON.stringify(this.tableData))
-          this.tableLoading = false
-        }, 500)
-      },
-      add () { //新增
-        this.addDialog = true
-        this.type = '新增'
-      },
-      edit () { //编辑
-        this.addDialog = true
-        this.type = '编辑'
-      },
-      goDetail () { //查看
-        this.addDialog = true
-        this.type = '查看'
-      },
-      getFormData (data) {
-
-      },
-      cancal (index, rows) { //删除
-        rows.splice(index, 1)
-        this.getTableList()
       },
     },
     mounted () {
       this.getMyAppList();
-      this.getFavAndHisList();
-      this.getTableList() //显示table
+      this.getFavList();
+      this.getHisList();
+      this.getEnvirQueryList();
       this.$dragging.$on('dragged', ({value}) => {
         console.log(value.item)
         console.log(value.list)
@@ -353,9 +430,28 @@
         border: 1px solid #e8e8e8;
         height: auto;
 
+        .add {
+            background: #A9D96C;
+            width: calc(16.667% - 10px);
+            margin: 5px;
+            text-align: center;
+            height: 90px;
+            transition: transform .3s;
+            cursor: pointer;
+            float: left;
+
+            .addclick {
+                color: #fff;
+                font-size: inherit;
+                font-family: 微软雅黑;
+                font-weight: bold;
+                letter-spacing: 2px
+            }
+        }
+
         .box_left {
             width: 140px;
-            height: 130px;
+            min-height: 130px;
             background: rgb(169, 217, 108);
             color: #fff;
             font-size: 14px;
@@ -386,6 +482,12 @@
             background: #fff;
             padding: 10px 0;
 
+            .card{
+                &:hover {
+                    transform: scale(1.05);
+                }
+            }
+
             .box-card {
                 width: calc(16.667% - 10px);
                 margin: 6px 5px;;
@@ -407,7 +509,42 @@
                 }
 
                 &:hover {
-                    transform: scale(1.05);
+                    .icon_img {
+                        opacity: 1;
+                        transition: all .5s;
+                    }
+                }
+
+                .icon_img {
+                    opacity: 0;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 20px;
+                    height: 100%;
+
+                    p {
+                        font-size: 16px;
+                        margin: 3px 0;
+
+                        &:hover {
+                            color: #A9D96C;
+                            cursor: pointer;
+                            font-weight: 600;
+                        }
+                    }
+
+                    .el-icon-delete {
+                        color: #b50e0e;
+                    }
+
+                    .el-icon-edit {
+                        color: blue;
+                    }
+
+                    .el-icon-search {
+                        color: black;
+                    }
                 }
 
                 .new {

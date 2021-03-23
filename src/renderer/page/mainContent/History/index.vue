@@ -1,5 +1,5 @@
 <template>
-    <div class="History"> 
+    <div class="History">
         <h1 class="title-top-nav">发布历史</h1>
         <el-row>
             <el-col :span="6">
@@ -99,7 +99,7 @@ export default {
             width: 30%;
             margin-left: 5%;
             text-align: center;
-            padding: 5px 10px;
+            /*padding: 5px 10px;*/
             color: #fff;
             &:nth-of-type(1) {
                 margin-left: 0;
