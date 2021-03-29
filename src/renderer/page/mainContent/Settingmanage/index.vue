@@ -17,20 +17,28 @@
                 <setting-text></setting-text>
             </el-tab-pane>
         </el-tabs>
+        <div class="zll-dialog">
+            <popout :visible.sync="addDialog" v-show="addDialog" class="Config_add">
+                <Add ref="add" slot="content" ></Add>
+            </popout>
+        </div>
     </div>
 </template>
 <script>
 import settingTable from './setting_table'
 import settingText from './setting_text'
+import Add from './add'
     export default {
       name:"",
       components: {
         settingTable,
-        settingText
+        settingText,
+        Add
       },
       data(){
         return {
-          activeName: 'table'
+          activeName: 'table',
+          addDialog:false
         }
       },
       methods:{
