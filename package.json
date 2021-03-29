@@ -6,7 +6,7 @@
   "license": null,
   "main": "./dist/electron/main.js",
   "scripts": {
-    "package:linux": "electron-packager . --overwrite   --platform=linux -no-sandbox --electron-version=2.0.18 --arch=x64 --asar --out=out --icon=./tray/icon.ico",
+    "package:linux": "electron-packager . Agent --platform=linux --out ../Agent --arch=x64 --app-version=0.0.1 --electron-version=2.0.4 --overwrite",
     "build": "node .electron-vue/build.js && electron-builder",
     "package:unbu": "electron-packager . configCenter --platform=linux --arch=x64 --out=./dist --asar --app-version=2.0.1",
     "package:lin": "electron-builder --publish never --linux",

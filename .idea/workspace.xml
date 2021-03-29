@@ -2,110 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2b0fd18c-b60e-4041-9ee9-9b65894f4b29" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/img/nr-apply.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/img/nr-approve.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/img/nr-envir.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/img/nr-home.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/img/nr-log.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/img/nr-setting.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/img/nr-version-ch.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/img/nr-version-move.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/img/nr-version.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/page/mainContent/Approvemanage/apply_approve.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/page/mainContent/Approvemanage/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/page/mainContent/Approvemanage/setting_approve.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/page/mainContent/Settingmanage/add.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/store/modules/outParam.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/LeftMenu/LeftMenuData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/LeftMenu/LeftMenuData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/LeftMenu/MenuList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/LeftMenu/MenuList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/Table/Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/Table/Index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/Tinymce/Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/Tinymce/Index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/Tinymce/tinymce.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/page/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/page/Login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Applymanage/Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/page/mainContent/Applymanage/Index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Applymanage/add.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/page/mainContent/Applymanage/add.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Approval/Contract.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Approval/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Approval/Project.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Approval/Purchase.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Approval/detail.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Budget/BankDeposit/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Budget/BankDeposit/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Budget/BudgetManage/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Budget/BudgetManage/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Budget/BudgetSearch/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Budget/CashOnHand/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Budget/CashOnHand/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Budget/SalaryDeclare/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Budget/SalaryDeclare/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Budget/SalaryDeclare/payment.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Contract/ContractManage/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Contract/ContractManage/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Contract/MineContract/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Contract/MineContract/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Environment/Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/page/mainContent/Environment/Index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Environment/add.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/page/mainContent/Environment/add.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Expense/AccountManage/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Expense/AccountManage/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Expense/MineAccount/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Expense/MineAccount/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Finance/BillManage/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Finance/MainFare/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Finance/MainFare/MakeOut.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Finance/MainFare/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/FirstPage/Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/page/mainContent/FirstPage/Index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/History/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/page/mainContent/History/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/OutInStorage/InStorage/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/OutInStorage/InStorage/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/OutInStorage/OutDetail/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/OutInStorage/OutDetail/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/OutInStorage/OutStorage/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/OutInStorage/OutStorage/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Project/MineProject/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Project/MineProject/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Project/ProjectManage/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Project/ProjectManage/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Purchase/BuyTask/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Purchase/BuyTask/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Purchase/BuyTask/detail.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Purchase/ProductManage/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Purchase/ProductManage/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Purchase/Suply/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Purchase/Suply/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Settingmanage/setting_text.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/page/mainContent/Settingmanage/setting_text.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/DataCopy/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/ParamManage/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/ParamManage/categoryAdd.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/ParamManage/departAdd.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/ParamManage/imgUpload.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/ParamManage/logoAdd.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/ParamManage/passwordAdd.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/ParamManage/snAdd.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/ParamManage/socialAdd.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/ParamManage/taxRateAdd.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/Power/Add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/Power/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/Send/Add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/Send/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/SetSubject/Add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/SetSubject/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/SystemLog/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/User/Add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/User/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/System/User/imgUpload.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Technology/MineWork/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Technology/MineWork/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Technology/MineWork/detail.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Technology/WorkManage/Index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Technology/WorkManage/add.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Technology/WorkManage/detail.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/page/mainContent/Technology/WorkManage/search.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/router/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/router/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/store/getters.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/store/getters.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/utils/servicebus/simple.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/utils/servicebus/simple.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/node_modules/" />
@@ -135,20 +34,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="387">
-              <caret line="35" column="12" lean-forward="true" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
+            <state relative-caret-position="644">
+              <caret line="23" column="50" lean-forward="true" selection-start-line="23" selection-start-column="50" selection-end-line="23" selection-end-column="50" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/renderer/page/Login.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2268">
-              <caret line="81" column="18" selection-start-line="81" selection-start-column="18" selection-end-line="81" selection-end-column="18" />
+            <state relative-caret-position="783">
+              <caret line="87" column="31" selection-start-line="87" selection-start-column="31" selection-end-line="87" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -263,7 +162,6 @@
         <option value="$PROJECT_DIR$/src/renderer/page/mainContent/Settingmanage/setting_table.vue" />
         <option value="$PROJECT_DIR$/src/renderer/page/mainContent/Settingmanage/index.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/Tinymce/tinymce.min.js" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/renderer/router/index.js" />
         <option value="$PROJECT_DIR$/src/renderer/permission.js" />
         <option value="$PROJECT_DIR$/src/renderer/components/LeftMenu/MenuList.vue" />
@@ -289,8 +187,9 @@
         <option value="$PROJECT_DIR$/src/main/index.js" />
         <option value="$PROJECT_DIR$/src/renderer/store/modules/outParam.js" />
         <option value="$PROJECT_DIR$/src/renderer/store/getters.js" />
-        <option value="$PROJECT_DIR$/src/renderer/page/Login.vue" />
         <option value="$PROJECT_DIR$/src/renderer/page/mainContent/FirstPage/Index.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/page/Login.vue" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -305,8 +204,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -346,165 +243,22 @@
               <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="Header" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="LeftMenu" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="SomeMenu" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="Table" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="Tinymce" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
               <item name="page" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-              <item name="mainContent" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-              <item name="mainContent" type="462c0819:PsiDirectoryNode" />
-              <item name="Applymanage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-              <item name="mainContent" type="462c0819:PsiDirectoryNode" />
-              <item name="Approvemanage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-              <item name="mainContent" type="462c0819:PsiDirectoryNode" />
-              <item name="Environment" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-              <item name="mainContent" type="462c0819:PsiDirectoryNode" />
-              <item name="FirstPage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-              <item name="mainContent" type="462c0819:PsiDirectoryNode" />
-              <item name="History" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-              <item name="mainContent" type="462c0819:PsiDirectoryNode" />
-              <item name="Settingmanage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="router" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="store" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="store" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="configcenter_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="configcenter_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="D:/android sdk/android-sdk-windows" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1616410660711" />
-    <property name="last_opened_file_path" value="E:/program/decoration" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1616980263372" />
+    <property name="last_opened_file_path" value="E:/program/rf/uniApp_project" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="E:\narui\configcenter_front\node_modules\eslint" />
@@ -631,18 +385,23 @@
       <workItem from="1616028706160" duration="13965000" />
       <workItem from="1616115512439" duration="599000" />
       <workItem from="1616374495978" duration="19620000" />
-      <workItem from="1616461172815" duration="932000" />
+      <workItem from="1616461172815" duration="10170000" />
+      <workItem from="1616746974868" duration="654000" />
+      <workItem from="1616814082968" duration="279000" />
+      <workItem from="1616814397210" duration="602000" />
+      <workItem from="1616815035912" duration="835000" />
+      <workItem from="1616979572252" duration="691000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="225653000" />
+    <option name="totallyTimeSpent" value="237952000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18459658" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14975551" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -660,7 +419,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Statistic" order="10" weight="0.3295964" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.30044842" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32174888" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="13" />
       <window_info anchor="bottom" id="TypeScript" order="14" />
@@ -986,13 +745,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/page/Login.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2268">
-          <caret line="81" column="18" selection-start-line="81" selection-start-column="18" selection-end-line="81" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/page/mainContent/FirstPage/Index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1652">
@@ -1029,8 +781,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="35" column="12" lean-forward="true" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
+        <state relative-caret-position="644">
+          <caret line="23" column="50" lean-forward="true" selection-start-line="23" selection-start-column="50" selection-end-line="23" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/page/Login.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="783">
+          <caret line="87" column="31" selection-start-line="87" selection-start-column="31" selection-end-line="87" selection-end-column="31" />
         </state>
       </provider>
     </entry>
