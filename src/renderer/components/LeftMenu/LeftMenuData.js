@@ -40,5 +40,9 @@ export default [
         name: 'logOperate',//路由name
         title: '日志操作',
         icon: require("@/assets/img/nr-log.png"),
-    },
+    },{
+        name: 'AgGrid',//路由name
+        title: 'AgGrid',
+        icon: require("@/assets/img/nr-log.png"),
+    }
 ]

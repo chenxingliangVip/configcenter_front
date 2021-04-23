@@ -4,6 +4,7 @@ import Applymanage from '@/page/mainContent/Applymanage/Index'
 import Settingmanage from '@/page/mainContent/Settingmanage/Index'
 import Approvemanage from '@/page/mainContent/Approvemanage/Index'
 import History from '@/page/mainContent/History/Index'
+import AgGrid from '@/page/mainContent/AgGrid/index'
 
 // **************登录后访问的路由**********
 export default [
@@ -47,5 +48,10 @@ export default [
         name: 'logOperate',
         meta: {title: '日志操作'},
         component: History
+    }, {
+        path: 'AgGrid',
+        name: 'AgGrid',
+        meta: {title: 'AgGrid'},
+        component: AgGrid
     }
 ]
