@@ -5,6 +5,7 @@ import Settingmanage from '@/page/mainContent/Settingmanage/Index'
 import Approvemanage from '@/page/mainContent/Approvemanage/Index'
 import History from '@/page/mainContent/History/Index'
 import AgGrid from '@/page/mainContent/AgGrid/index'
+import ProjectInfo from '@/page/mainContent/ProjectInfo/index'
 
 // **************登录后访问的路由**********
 export default [
@@ -53,5 +54,10 @@ export default [
         name: 'AgGrid',
         meta: {title: 'AgGrid'},
         component: AgGrid
+    }, {
+        path: 'ProjectInfo',
+        name: 'ProjectInfo',
+        meta: {title: '项目信息'},
+        component: ProjectInfo
     }
 ]

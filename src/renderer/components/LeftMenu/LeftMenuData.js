@@ -44,5 +44,9 @@ export default [
         name: 'AgGrid',//路由name
         title: 'AgGrid',
         icon: require("@/assets/img/nr-log.png"),
+    },{
+        name: 'ProjectInfo',//路由name
+        title: '项目信息',
+        icon: require("@/assets/img/nr-log.png"),
     }
 ]
