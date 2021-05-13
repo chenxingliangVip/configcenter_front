@@ -334,6 +334,8 @@ export default {
                 }
                 .buttonList {
                     float: right;
+                    display: flex;
+                    margin-bottom: 15px;
                     width: calc(100% - 300px);
                     justify-content: flex-end;
                     .zll-botton {
@@ -351,7 +353,9 @@ export default {
                 padding: 15px 0;
                 position: relative;
                 .buttonList {
+                    display: flex;
                     justify-content: flex-end;
+                    margin-bottom: 15px;
                     position: absolute;
                     right: 0;
                     top: 15px;

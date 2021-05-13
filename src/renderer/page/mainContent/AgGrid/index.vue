@@ -185,7 +185,7 @@ name: "App",
 };
 </script>
 
-<style>
+<style lang="css" scoped>
 .buttonList {
     display: flex;
     margin-bottom: 15px;
