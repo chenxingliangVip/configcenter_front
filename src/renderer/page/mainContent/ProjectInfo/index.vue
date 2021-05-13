@@ -1,7 +1,7 @@
 <template>
     <div class="ProjectInfo">
-        <el-row :gutter="15">
-            <el-col :span="4">
+        <div class="gutter">
+            <div class="col_1">
                 <div class="info_left">
                     <div class="item-1">
                         <h1>环境列表<span class="el-icon-question question"></span></h1>
@@ -38,8 +38,8 @@
                         </div>
                     </div>
                 </div>
-            </el-col>
-            <el-col :span="20">
+            </div>
+            <div class="col_2">
                 <div class="info_right">
                     <div class="collapse_list" v-for="(item,index) in collapseList" :key="index">
                         <div class="collapse_botton" @click="showClick(item)">[ 展开 / 收缩 ]</div>
@@ -143,8 +143,8 @@
                         </div>
                     </div>
                 </div>
-            </el-col>
-        </el-row>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -242,5 +242,137 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-   
+.ProjectInfo {
+    .gutter {
+        display: flex;
+        .col_1 {
+            width: 16.667%;
+            min-width: 180px;
+        }
+        .col_2 {
+            width: calc(83.333% - 15px);    
+            margin-left: 15px;
+        }
+    }
+    .info_left {
+        .item-1 {
+            border: 1px solid #cccccc;
+            background: #efefef;
+            margin-bottom: 15px;
+            h1 {
+                font-size: 14px;
+                font-weight: 400;
+                height: 35px;
+                line-height: 35px;
+                padding: 0 15px;
+                border-bottom: 1px solid #cccccc;
+                .question {
+                    color: #3a8ee6;
+                    float: right;
+                    font-size: 20px;
+                    margin-top: 7px;
+                    margin-left: 7px;
+                    cursor: pointer;
+                }
+            }
+            .dev {
+                padding: 0 20px;
+                .txt-1 {
+                    height: 35px;
+                    line-height: 35px;
+                    padding: 0;
+                }
+                .dev_list {
+                    line-height: 26px;
+                    display: flex;
+                    .title {
+                        width: 60px;
+                        text-align: right;
+                    }
+                    .detail {
+                        width: calc(100% - 60px);
+                    }
+                }
+            }
+        }
+    }
+    .info_right {
+        margin-top: 15px;
+        .collapse_list {
+            border: 1px solid #cccccc;
+            padding: 0px 15px 0px 15px;
+            position: relative;
+            margin-bottom: 30px;
+            .collapse_botton {
+                position: absolute;
+                top: -18px;
+                right: 0;
+                color: #3a8ee6;
+                cursor: pointer;
+            }
+            .showTitle {
+                .title {
+                    font-size: 14px;
+                    font-weight: bold;
+                    float: left;
+                    line-height: 30px;
+                    width: 300px;
+                    .haveEdit {
+                        background: #E6A23C;
+                        font-size: 12px;
+                        color: #ffffff;
+                        padding: 4px 10px;
+                        font-weight: normal;
+                        .num {
+                            background: #ffffff;
+                            color: #333;
+                            border-radius: 6px;    
+                            display: inline;
+                            padding: 0 4px
+                        }
+                    }
+                }
+                .buttonList {
+                    float: right;
+                    width: calc(100% - 300px);
+                    justify-content: flex-end;
+                    .zll-botton {
+                        margin: 0 5px;
+                        min-width: 60px;
+                        height: 30px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                }
+            }
+            .showDetail {
+                border-top: 1px solid #eeeeee;
+                padding: 15px 0;
+                position: relative;
+                .buttonList {
+                    justify-content: flex-end;
+                    position: absolute;
+                    right: 0;
+                    top: 15px;
+                    z-index: 111111;
+                    width: calc(100% - 300px);
+                    .zll-botton {
+                        margin: 0 5px;
+                        min-width: 40px;
+                        height: 30px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                }
+            }
+            .tabother {
+                .showTitle {
+                    padding-top: 15px;
+                }
+            }
+        }
+    }
+}
 </style>
